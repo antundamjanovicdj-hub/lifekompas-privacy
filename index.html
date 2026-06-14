@@ -684,8 +684,8 @@
       </div>
     </section>
 
-    <section id="screenshots" class="reveal">
-      <div class="section-head">
+    <section id="screenshots">
+      <div class="section-head reveal">
         <h2 data-i18n="screenshotsTitle"></h2>
         <p class="sub" data-i18n="screenshotsSub"></p>
       </div>
@@ -1034,7 +1034,8 @@
           var img = document.createElement('img');
           img.src = shotPath(shot.file);
           img.alt = meta.alt;
-          img.loading = i < 4 ? 'eager' : 'lazy';
+          img.loading = 'eager';
+          img.decoding = 'async';
           img.width = 390;
           img.height = 844;
 
@@ -1203,7 +1204,7 @@
               observer.unobserve(entry.target);
             }
           });
-        }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+        }, { threshold: 0.02, rootMargin: '0px 0px 8% 0px' });
         reveals.forEach(function (el) { observer.observe(el); });
       }
 
