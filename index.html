@@ -512,12 +512,12 @@
 
       .gallery-scroll {
         overflow-x: auto;
-        overscroll-behavior-x: contain;
+        overscroll-behavior-x: none;
         -webkit-overflow-scrolling: touch;
-        scroll-snap-type: x proximity;
+        scroll-snap-type: x mandatory;
         max-width: 100%;
-        margin: 0 -4px;
-        padding: 2px 4px 14px;
+        margin: 0;
+        padding: 2px 0 14px;
       }
 
       .gallery {
@@ -526,17 +526,19 @@
         align-items: stretch;
         gap: 14px;
         overflow: visible;
-        padding: 0;
+        padding: 0 14px;
+        padding-inline-end: max(14px, calc(100% - min(68vw, 188px)));
         margin: 0;
         justify-content: flex-start;
         width: max-content;
-        min-width: 100%;
+        box-sizing: border-box;
       }
 
       .gallery .shot {
         flex: 0 0 min(68vw, 188px);
         max-width: none;
-        scroll-snap-align: center;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
       }
 
       .features {
@@ -1297,6 +1299,22 @@
         guideFootnoteEl.textContent = pack.guideFootnote || '';
       }
 
+      function clampGalleryScroll() {
+        var scroller = document.querySelector('.gallery-scroll');
+        if (!scroller || window.matchMedia('(min-width: 900px)').matches) return;
+        var max = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
+        if (scroller.scrollLeft > max) scroller.scrollLeft = max;
+        if (scroller.scrollLeft < 0) scroller.scrollLeft = 0;
+      }
+
+      function bindGalleryScrollClamp() {
+        var scroller = document.querySelector('.gallery-scroll');
+        if (!scroller || scroller.dataset.clampBound === '1') return;
+        scroller.dataset.clampBound = '1';
+        scroller.addEventListener('scroll', clampGalleryScroll, { passive: true });
+        scroller.addEventListener('scrollend', clampGalleryScroll, { passive: true });
+      }
+
       function buildGallery() {
         var pack = PACK[currentLang];
         galleryEl.innerHTML = '';
@@ -1347,6 +1365,7 @@
             }
           });
         });
+        clampGalleryScroll();
       }
 
       function appendVideoLightboxItems() {
@@ -1546,6 +1565,7 @@
       setLang(detectLang());
       initGuideDetails();
       openGuideFromHash();
+      bindGalleryScrollClamp();
       window.addEventListener('hashchange', openGuideFromHash);
       initReveal();
     })();
