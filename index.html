@@ -8,18 +8,23 @@
   <title>LifeKompas</title>
   <style>
     :root {
-      --bg: #0f1724;
+      --bg: #080e18;
+      --bg-elevated: #101a28;
       --bg-card: rgba(255, 255, 255, 0.06);
-      --border: rgba(255, 255, 255, 0.12);
+      --border: rgba(255, 255, 255, 0.1);
       --text: #f4f7fb;
-      --muted: #a8b4c4;
+      --muted: #9aa8ba;
       --accent: #3d8f5a;
-      --accent-soft: rgba(61, 143, 90, 0.18);
-      --radius: 16px;
-      --shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+      --accent-light: #7ec99a;
+      --accent-soft: rgba(61, 143, 90, 0.2);
+      --radius: 18px;
+      --shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+      --header-h: 58px;
     }
 
     * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
@@ -29,30 +34,54 @@
       line-height: 1.55;
     }
 
-    a { color: #7ec99a; text-decoration: none; }
+    a { color: var(--accent-light); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
-    .wrap {
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background: rgba(8, 14, 24, 0.82);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .site-header-inner {
       max-width: 1100px;
       margin: 0 auto;
-      padding: 0 20px 64px;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: var(--header-h);
     }
+
+    .site-logo {
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .site-logo:hover { text-decoration: none; opacity: 0.9; }
 
     .lang-picker {
       display: flex;
-      justify-content: center;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 24px;
+      gap: 6px;
+      justify-content: flex-end;
     }
 
     .lang-picker button {
       border: 1px solid var(--border);
-      background: var(--bg-card);
+      background: rgba(255, 255, 255, 0.04);
       color: var(--muted);
       border-radius: 999px;
-      padding: 8px 14px;
-      font-size: 0.88rem;
+      padding: 7px 12px;
+      font-size: 0.82rem;
       cursor: pointer;
       transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
     }
@@ -69,46 +98,184 @@
       font-weight: 600;
     }
 
-    .hero {
-      text-align: center;
-      padding: 32px 0 40px;
+    .hero-banner {
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
     }
 
-    .hero h1 {
-      font-size: clamp(2rem, 5vw, 3rem);
-      margin: 0 0 12px;
-      letter-spacing: -0.02em;
+    .hero-banner::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("assets/hero-bg.jpg") center 30% / cover no-repeat;
+      transform: scale(1.06);
+      filter: blur(1px);
     }
 
-    .hero .tagline {
-      font-size: 1.15rem;
-      color: var(--muted);
-      max-width: 540px;
+    .hero-banner::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 20%, rgba(61, 143, 90, 0.14), transparent 60%),
+        linear-gradient(180deg, rgba(8, 14, 24, 0.55) 0%, rgba(8, 14, 24, 0.88) 55%, var(--bg) 100%);
+    }
+
+    .hero-layout {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
       margin: 0 auto;
+      padding: 56px 20px 64px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    @media (min-width: 860px) {
+      .hero-layout {
+        grid-template-columns: 1.05fr 0.95fr;
+        padding: 72px 20px 80px;
+      }
+    }
+
+    .hero-copy { text-align: center; }
+
+    @media (min-width: 860px) {
+      .hero-copy { text-align: left; }
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      margin: 0 0 16px;
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+    }
+
+    .hero-copy .tagline {
+      font-size: clamp(1.05rem, 2.5vw, 1.2rem);
+      color: #c8d3e0;
+      max-width: 34rem;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 860px) {
+      .hero-copy .tagline { margin: 0; }
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 24px;
+    }
+
+    @media (min-width: 860px) {
+      .hero-actions { justify-content: flex-start; }
     }
 
     .hero .pill {
       display: inline-block;
-      margin-top: 20px;
-      padding: 8px 16px;
+      padding: 9px 16px;
       border-radius: 999px;
       background: var(--accent-soft);
       border: 1px solid rgba(61, 143, 90, 0.35);
       color: #b8e6c8;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
+      font-weight: 600;
     }
 
-    section { margin-top: 48px; }
+    .hero-guide-link {
+      display: inline-flex;
+      align-items: center;
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.05);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
 
-    section h2 {
-      font-size: 1.35rem;
+    .hero-guide-link:hover {
+      text-decoration: none;
+      border-color: rgba(61, 143, 90, 0.45);
+      background: rgba(61, 143, 90, 0.12);
+    }
+
+    .hero-phone {
+      justify-self: center;
+      width: min(100%, 260px);
+      filter: drop-shadow(0 24px 48px rgba(0, 0, 0, 0.45));
+    }
+
+    .hero-phone .phone-shell {
+      padding: 12px 12px 0;
+      background: linear-gradient(165deg, #3a4658 0%, #1e2836 100%);
+      border-radius: 34px 34px 0 0;
+      border: 2px solid rgba(255, 255, 255, 0.14);
+      border-bottom: none;
+    }
+
+    .hero-phone .phone-notch {
+      width: 38%;
+      height: 5px;
+      margin: 0 auto 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    .hero-phone img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 22px 22px 0 0;
+    }
+
+    .hero-copy,
+    .hero-phone {
+      animation: heroIn 0.65s ease both;
+    }
+
+    .hero-phone { animation-delay: 0.1s; }
+
+    @keyframes heroIn {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px 72px;
+    }
+
+    section {
+      margin-top: 56px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(1.35rem, 3vw, 1.65rem);
       margin: 0 0 8px;
+      letter-spacing: -0.02em;
     }
 
-    section .sub {
+    .section-head .sub {
       color: var(--muted);
-      margin: 0 0 24px;
-      font-size: 0.95rem;
+      margin: 0 0 28px;
+      font-size: 0.96rem;
+      max-width: 42rem;
     }
 
     .video-grid {
@@ -120,20 +287,8 @@
     .video-slot {
       aspect-ratio: 16 / 9;
       border-radius: var(--radius);
-      border: 2px dashed var(--border);
+      border: 1px solid var(--border);
       background: var(--bg-card);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 24px;
-      min-height: 180px;
-    }
-
-    .video-slot.has-video {
-      border-style: solid;
-      padding: 0;
       overflow: hidden;
       cursor: zoom-in;
     }
@@ -146,29 +301,75 @@
       display: block;
     }
 
-    .video-slot .placeholder-icon {
-      font-size: 2rem;
-      margin-bottom: 8px;
-      opacity: 0.5;
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
     }
 
-    .video-slot .placeholder-label {
-      color: var(--muted);
-      font-size: 0.9rem;
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 18px;
+      border-radius: 14px;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03));
+      border: 1px solid var(--border);
+      font-size: 0.94rem;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .video-slot .placeholder-hint {
+    .feature:hover {
+      transform: translateY(-2px);
+      border-color: rgba(61, 143, 90, 0.38);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+    }
+
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: var(--accent-soft);
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .guide-card {
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 28px 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .guide-list {
+      margin: 0;
+      padding-left: 1.15em;
+      color: var(--text);
+    }
+
+    .guide-list li {
+      margin-bottom: 12px;
+      padding-left: 4px;
+    }
+
+    .guide-list li:last-child { margin-bottom: 0; }
+
+    .guide-footnote {
+      margin: 22px 0 0;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
       color: var(--muted);
-      font-size: 0.75rem;
-      margin-top: 8px;
-      opacity: 0.7;
-      max-width: 240px;
+      font-size: 0.92rem;
     }
 
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 24px;
+      gap: 28px;
       justify-items: center;
     }
 
@@ -182,94 +383,61 @@
     .shot {
       width: 100%;
       max-width: 220px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
+      background: linear-gradient(165deg, #3a4658 0%, #1e2836 100%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 28px;
       overflow: hidden;
       box-shadow: var(--shadow);
-      transition: transform 0.2s ease;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
 
-    .shot:hover { transform: translateY(-3px); }
+    .shot:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.38);
+    }
 
-    .shot img {
+    .phone-frame {
+      padding: 10px 10px 0;
+    }
+
+    .phone-frame::before {
+      content: "";
+      display: block;
+      width: 36%;
+      height: 4px;
+      margin: 0 auto 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .phone-frame img {
       width: 100%;
       height: auto;
       display: block;
+      border-radius: 18px 18px 0 0;
       cursor: zoom-in;
     }
 
     .shot figcaption {
-      padding: 10px 12px 12px;
+      padding: 12px 14px 14px;
       font-size: 0.82rem;
       color: var(--muted);
-      border-top: 1px solid var(--border);
+      background: rgba(0, 0, 0, 0.18);
     }
 
     .shot figcaption strong {
       display: block;
       color: var(--text);
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       margin-bottom: 2px;
     }
 
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 12px;
-      margin-bottom: 32px;
-    }
-
-    .feature {
-      padding: 14px 16px;
-      border-radius: 12px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      font-size: 0.92rem;
-    }
-
-    .feature span { margin-right: 6px; }
-
-    .hero-guide-link {
-      display: inline-block;
-      margin-top: 16px;
-      font-size: 0.92rem;
-      font-weight: 600;
-    }
-
-    .guide-card {
-      background: var(--bg-card);
+    footer {
+      margin-top: 72px;
+      padding: 32px 24px;
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 24px 24px 20px;
-      box-shadow: var(--shadow);
-    }
-
-    .guide-list {
-      margin: 0;
-      padding-left: 1.2em;
-      color: var(--text);
-    }
-
-    .guide-list li {
-      margin-bottom: 12px;
-      padding-left: 4px;
-    }
-
-    .guide-list li:last-child { margin-bottom: 0; }
-
-    .guide-footnote {
-      margin: 20px 0 0;
-      padding-top: 16px;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-
-    footer {
-      margin-top: 64px;
-      padding-top: 32px;
-      border-top: 1px solid var(--border);
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
       text-align: center;
       color: var(--muted);
       font-size: 0.9rem;
@@ -279,13 +447,24 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 16px 24px;
+      gap: 16px 28px;
       margin-bottom: 16px;
     }
 
     footer nav a { font-weight: 600; }
 
     footer .contact { margin-top: 12px; }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: none;
+    }
 
     .lightbox {
       position: fixed;
@@ -296,7 +475,7 @@
       justify-content: center;
       padding: 16px;
       background: rgba(5, 10, 18, 0.92);
-      backdrop-filter: blur(6px);
+      backdrop-filter: blur(8px);
     }
 
     .lightbox[hidden] { display: none; }
@@ -318,8 +497,8 @@
     .lightbox-media {
       max-height: calc(100vh - 120px);
       overflow: auto;
-      border-radius: 12px;
-      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
+      border-radius: 16px;
+      box-shadow: 0 16px 56px rgba(0, 0, 0, 0.55);
     }
 
     .lightbox-media img {
@@ -328,7 +507,7 @@
       height: auto;
       max-height: calc(100vh - 120px);
       object-fit: contain;
-      border-radius: 12px;
+      border-radius: 16px;
     }
 
     .lightbox-media iframe,
@@ -353,7 +532,7 @@
     .lightbox-next {
       position: fixed;
       border: 1px solid var(--border);
-      background: rgba(15, 23, 36, 0.85);
+      background: rgba(15, 23, 36, 0.88);
       color: var(--text);
       border-radius: 999px;
       cursor: pointer;
@@ -394,75 +573,106 @@
       .lightbox-prev { left: 4px; }
       .lightbox-next { right: 4px; }
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .hero-copy,
+      .hero-phone {
+        animation: none;
+      }
+      .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+      .feature:hover,
+      .shot:hover {
+        transform: none;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header class="hero">
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a href="#top" class="site-logo">LifeKompas</a>
       <nav class="lang-picker" aria-label="Language">
         <button type="button" data-lang="en">English</button>
         <button type="button" data-lang="hr">Hrvatski</button>
         <button type="button" data-lang="de">Deutsch</button>
       </nav>
-      <h1>LifeKompas</h1>
-      <p class="tagline" data-i18n="tagline"></p>
-      <span class="pill" data-i18n="pill"></span>
-      <a href="#guide" class="hero-guide-link" data-i18n="guideJump"></a>
-    </header>
+    </div>
+  </header>
 
-    <section id="videos">
-      <h2 data-i18n="videosTitle"></h2>
-      <p class="sub" data-i18n="videosSub"></p>
+  <div class="hero-banner hero" id="top">
+    <div class="hero-layout">
+      <div class="hero-copy">
+        <h1>LifeKompas</h1>
+        <p class="tagline" data-i18n="tagline"></p>
+        <div class="hero-actions">
+          <span class="pill" data-i18n="pill"></span>
+          <a href="#guide" class="hero-guide-link" data-i18n="guideJump"></a>
+        </div>
+      </div>
+      <div class="hero-phone" aria-hidden="true">
+        <div class="phone-shell">
+          <div class="phone-notch"></div>
+          <img id="hero-shot" src="assets/screenshots/en/02-home.png" alt="" width="390" height="844">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section id="videos" class="reveal" hidden>
+      <div class="section-head">
+        <h2 data-i18n="videosTitle"></h2>
+        <p class="sub" data-i18n="videosSub"></p>
+      </div>
       <div class="video-grid">
-        <div class="video-slot" id="video-slot-1">
-          <span class="placeholder-icon">▶</span>
-          <span class="placeholder-label" data-i18n="demo1Label"></span>
-          <span class="placeholder-hint" data-i18n="demo1Hint"></span>
-        </div>
-        <div class="video-slot" id="video-slot-2">
-          <span class="placeholder-icon">▶</span>
-          <span class="placeholder-label" data-i18n="demo2Label"></span>
-          <span class="placeholder-hint" data-i18n="demo2Hint"></span>
-        </div>
-        <div class="video-slot" id="video-slot-3">
-          <span class="placeholder-icon">▶</span>
-          <span class="placeholder-label" data-i18n="demo3Label"></span>
-          <span class="placeholder-hint" data-i18n="demo3Hint"></span>
-        </div>
+        <div class="video-slot" id="video-slot-1"></div>
+        <div class="video-slot" id="video-slot-2"></div>
+        <div class="video-slot" id="video-slot-3"></div>
       </div>
     </section>
 
-    <section id="modules">
-      <h2 data-i18n="modulesTitle"></h2>
-      <p class="sub" data-i18n="modulesSub"></p>
+    <section id="modules" class="reveal">
+      <div class="section-head">
+        <h2 data-i18n="modulesTitle"></h2>
+        <p class="sub" data-i18n="modulesSub"></p>
+      </div>
       <div class="features">
-        <div class="feature"><span>🧭</span> <span data-i18n="modObligations"></span></div>
-        <div class="feature"><span>🛒</span> <span data-i18n="modShopping"></span></div>
-        <div class="feature"><span>⏳</span> <span data-i18n="modDeadlines"></span></div>
-        <div class="feature"><span>💰</span> <span data-i18n="modFinances"></span></div>
-        <div class="feature"><span>❤️</span> <span data-i18n="modHealth"></span></div>
-        <div class="feature"><span>📓</span> <span data-i18n="modDiary"></span></div>
-        <div class="feature"><span>🛠️</span> <span data-i18n="modWorklog"></span></div>
-        <div class="feature"><span>✨</span> <span data-i18n="modAssistant"></span></div>
+        <div class="feature"><span class="feature-icon">🧭</span><span data-i18n="modObligations"></span></div>
+        <div class="feature"><span class="feature-icon">🛒</span><span data-i18n="modShopping"></span></div>
+        <div class="feature"><span class="feature-icon">⏳</span><span data-i18n="modDeadlines"></span></div>
+        <div class="feature"><span class="feature-icon">💰</span><span data-i18n="modFinances"></span></div>
+        <div class="feature"><span class="feature-icon">❤️</span><span data-i18n="modHealth"></span></div>
+        <div class="feature"><span class="feature-icon">📓</span><span data-i18n="modDiary"></span></div>
+        <div class="feature"><span class="feature-icon">🛠️</span><span data-i18n="modWorklog"></span></div>
+        <div class="feature"><span class="feature-icon">✨</span><span data-i18n="modAssistant"></span></div>
       </div>
     </section>
 
-    <section id="guide">
-      <h2 data-i18n="guideTitle"></h2>
-      <p class="sub" data-i18n="guideSub"></p>
+    <section id="guide" class="reveal">
+      <div class="section-head">
+        <h2 data-i18n="guideTitle"></h2>
+        <p class="sub" data-i18n="guideSub"></p>
+      </div>
       <div class="guide-card">
         <ul class="guide-list" id="guide-list"></ul>
         <p class="guide-footnote" id="guide-footnote"></p>
       </div>
     </section>
 
-    <section id="screenshots">
-      <h2 data-i18n="screenshotsTitle"></h2>
-      <p class="sub" data-i18n="screenshotsSub"></p>
+    <section id="screenshots" class="reveal">
+      <div class="section-head">
+        <h2 data-i18n="screenshotsTitle"></h2>
+        <p class="sub" data-i18n="screenshotsSub"></p>
+      </div>
       <div class="gallery" id="gallery"></div>
     </section>
 
-    <footer>
+    <footer class="reveal">
       <nav>
         <a href="privacy.html" id="link-privacy" data-i18n="privacyLink"></a>
         <a href="terms.html" id="link-terms" data-i18n="termsLink"></a>
@@ -704,6 +914,8 @@
       var galleryEl = document.getElementById('gallery');
       var guideListEl = document.getElementById('guide-list');
       var guideFootnoteEl = document.getElementById('guide-footnote');
+      var heroShotEl = document.getElementById('hero-shot');
+      var videosSection = document.getElementById('videos');
       var lightbox = document.getElementById('lightbox');
       var panel = document.getElementById('lightbox-panel');
       var media = document.getElementById('lightbox-media');
@@ -754,6 +966,25 @@
         });
 
         buildGuide();
+        updateHeroShot();
+        syncVideoSection();
+      }
+
+      function updateHeroShot() {
+        if (!heroShotEl) return;
+        var pack = PACK[currentLang];
+        heroShotEl.src = shotPath('02-home.png');
+        heroShotEl.alt = pack.shot02.alt;
+      }
+
+      function syncVideoSection() {
+        var hasContent = false;
+        document.querySelectorAll('.video-slot').forEach(function (slot) {
+          var media = slot.querySelector('iframe, video');
+          slot.classList.toggle('has-video', !!media);
+          if (media) hasContent = true;
+        });
+        if (videosSection) videosSection.hidden = !hasContent;
       }
 
       function buildGuide() {
@@ -777,6 +1008,9 @@
           var fig = document.createElement('figure');
           fig.className = 'shot';
 
+          var frame = document.createElement('div');
+          frame.className = 'phone-frame';
+
           var img = document.createElement('img');
           img.src = shotPath(shot.file);
           img.alt = meta.alt;
@@ -790,7 +1024,8 @@
           cap.appendChild(strong);
           cap.appendChild(document.createTextNode(meta.desc));
 
-          fig.appendChild(img);
+          frame.appendChild(img);
+          fig.appendChild(frame);
           fig.appendChild(cap);
           galleryEl.appendChild(fig);
 
@@ -931,7 +1166,29 @@
         if (e.key === 'ArrowRight' && !btnNext.hidden) stepLightbox(1);
       });
 
+      function initReveal() {
+        var reveals = document.querySelectorAll('.reveal');
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          reveals.forEach(function (el) { el.classList.add('is-visible'); });
+          return;
+        }
+        if (!('IntersectionObserver' in window)) {
+          reveals.forEach(function (el) { el.classList.add('is-visible'); });
+          return;
+        }
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+        reveals.forEach(function (el) { observer.observe(el); });
+      }
+
       setLang(detectLang());
+      initReveal();
     })();
   </script>
 </body>
