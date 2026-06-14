@@ -247,9 +247,50 @@
     .hero-copy,
     .hero-phone {
       animation: heroIn 0.65s ease both;
+      animation-delay: 0.1s;
     }
 
-    .hero-phone { animation-delay: 0.1s; }
+    @media (max-width: 859px) {
+      .hero-layout {
+        padding: 32px 16px 36px;
+        gap: 20px;
+      }
+
+      .hero-copy h1 {
+        font-size: clamp(1.85rem, 8vw, 2.4rem);
+        margin-bottom: 12px;
+      }
+
+      .hero-copy .tagline {
+        font-size: 1rem;
+      }
+
+      .hero-actions {
+        margin-top: 16px;
+      }
+
+      .hero-phone {
+        width: min(100%, 190px);
+        filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.38));
+      }
+
+      section {
+        margin-top: 40px;
+      }
+
+      .section-head .sub {
+        margin-bottom: 20px;
+      }
+
+      .wrap {
+        padding-bottom: 48px;
+      }
+
+      footer {
+        margin-top: 48px;
+        padding: 24px 18px;
+      }
+    }
 
     @keyframes heroIn {
       from {
@@ -385,6 +426,61 @@
       font-size: 0.92rem;
     }
 
+    .guide-details summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 18px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.11), rgba(100, 170, 140, 0.07));
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .guide-details summary::-webkit-details-marker { display: none; }
+
+    .guide-details summary::after {
+      content: "▾";
+      color: var(--accent-light);
+      font-size: 1.1rem;
+      transition: transform 0.2s ease;
+    }
+
+    .guide-details[open] summary {
+      margin-bottom: 14px;
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+
+    .guide-details[open] summary::after {
+      transform: rotate(180deg);
+    }
+
+    .guide-details .guide-card {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+
+    @media (min-width: 900px) {
+      .guide-details summary { display: none; }
+
+      .guide-details .guide-card {
+        border-radius: var(--radius);
+      }
+    }
+
+    .gallery-hint {
+      display: none;
+      margin: 0 0 14px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -396,6 +492,50 @@
       .gallery {
         grid-template-columns: repeat(4, 220px);
         justify-content: center;
+      }
+    }
+
+    @media (max-width: 899px) {
+      .gallery-hint {
+        display: block;
+      }
+
+      .gallery {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: stretch;
+        gap: 14px;
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding: 2px 2px 14px;
+        margin: 0 -4px;
+        justify-content: flex-start;
+      }
+
+      .gallery .shot {
+        flex: 0 0 min(68vw, 188px);
+        max-width: none;
+        scroll-snap-align: center;
+      }
+
+      .features {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .feature {
+        padding: 12px 12px;
+        font-size: 0.86rem;
+        gap: 10px;
+      }
+
+      .feature-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 1.05rem;
+        border-radius: 10px;
       }
     }
 
@@ -678,10 +818,13 @@
         <h2 data-i18n="guideTitle"></h2>
         <p class="sub" data-i18n="guideSub"></p>
       </div>
-      <div class="guide-card">
-        <ul class="guide-list" id="guide-list"></ul>
-        <p class="guide-footnote" id="guide-footnote"></p>
-      </div>
+      <details class="guide-details" id="guide-details">
+        <summary data-i18n="guideExpand"></summary>
+        <div class="guide-card">
+          <ul class="guide-list" id="guide-list"></ul>
+          <p class="guide-footnote" id="guide-footnote"></p>
+        </div>
+      </details>
     </section>
 
     <section id="screenshots">
@@ -689,6 +832,7 @@
         <h2 data-i18n="screenshotsTitle"></h2>
         <p class="sub" data-i18n="screenshotsSub"></p>
       </div>
+      <p class="gallery-hint" data-i18n="gallerySwipeHint"></p>
       <div class="gallery" id="gallery"></div>
     </section>
 
@@ -776,6 +920,8 @@
             'Before uninstalling: Settings → Export backup (Drive, iCloud, email…).'
           ],
           guideFootnote: 'Your data stays on your device — no account, no cloud.',
+          guideExpand: 'Open quick guide',
+          gallerySwipeHint: '← Swipe for all screens →',
           screenshotsTitle: 'App in action',
           screenshotsSub: 'Screens from the current release. Tap any screenshot to enlarge.',
           privacyLink: 'Privacy Policy',
@@ -840,6 +986,8 @@
             'Prije brisanja app-a: Postavke → Izvezi sigurnosnu kopiju (Drive, iCloud, mail…).'
           ],
           guideFootnote: 'Podaci ostaju na tvom uređaju — bez računa, bez oblaka.',
+          guideExpand: 'Otvori kratku uputu',
+          gallerySwipeHint: '← Povuci za sve ekrane →',
           screenshotsTitle: 'App u praksi',
           screenshotsSub: 'Ekrani iz trenutne verzije. Dodirni screenshot za povećanje.',
           privacyLink: 'Pravila privatnosti',
@@ -904,6 +1052,8 @@
             'Vor dem Deinstallieren: Einstellungen → Sicherungskopie exportieren (Drive, iCloud, E-Mail…).'
           ],
           guideFootnote: 'Deine Daten bleiben auf dem Gerät — kein Konto, keine Cloud.',
+          guideExpand: 'Kurzanleitung öffnen',
+          gallerySwipeHint: '← Wischen für alle Screens →',
           screenshotsTitle: 'App in Aktion',
           screenshotsSub: 'Screenshots der aktuellen Version. Tippe zum Vergrößern.',
           privacyLink: 'Datenschutz',
@@ -931,6 +1081,7 @@
       };
 
       var currentLang = 'en';
+      var guideDetailsEl = document.getElementById('guide-details');
       var galleryEl = document.getElementById('gallery');
       var guideListEl = document.getElementById('guide-list');
       var guideFootnoteEl = document.getElementById('guide-footnote');
@@ -1187,6 +1338,28 @@
         if (e.key === 'ArrowRight' && !btnNext.hidden) stepLightbox(1);
       });
 
+      function syncGuideDetails() {
+        if (!guideDetailsEl) return;
+        if (window.matchMedia('(min-width: 900px)').matches) {
+          guideDetailsEl.setAttribute('open', '');
+        } else if (location.hash !== '#guide') {
+          guideDetailsEl.removeAttribute('open');
+        }
+      }
+
+      function openGuideFromHash() {
+        if (location.hash === '#guide' && guideDetailsEl) {
+          guideDetailsEl.setAttribute('open', '');
+        }
+      }
+
+      var heroGuideLink = document.querySelector('.hero-guide-link');
+      if (heroGuideLink) {
+        heroGuideLink.addEventListener('click', function () {
+          if (guideDetailsEl) guideDetailsEl.setAttribute('open', '');
+        });
+      }
+
       function initReveal() {
         var reveals = document.querySelectorAll('.reveal');
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -1209,6 +1382,10 @@
       }
 
       setLang(detectLang());
+      syncGuideDetails();
+      openGuideFromHash();
+      window.addEventListener('resize', syncGuideDetails);
+      window.addEventListener('hashchange', openGuideFromHash);
       initReveal();
     })();
   </script>
