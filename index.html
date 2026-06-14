@@ -141,14 +141,24 @@
       max-width: 240px;
     }
 
-    /* Screenshots */
+    /* Screenshots — fiksna širina kao telefon, cijela slika vidljiva */
     .gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 24px;
+      justify-items: center;
+    }
+
+    @media (min-width: 900px) {
+      .gallery {
+        grid-template-columns: repeat(4, 220px);
+        justify-content: center;
+      }
     }
 
     .shot {
+      width: 100%;
+      max-width: 220px;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -161,10 +171,9 @@
 
     .shot img {
       width: 100%;
+      height: auto;
       display: block;
-      aspect-ratio: 9 / 19.5;
-      object-fit: cover;
-      object-position: top;
+      vertical-align: top;
     }
 
     .shot figcaption {
