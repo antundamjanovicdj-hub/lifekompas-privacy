@@ -38,10 +38,40 @@
       padding: 0 20px 64px;
     }
 
-    /* Hero */
+    .lang-picker {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .lang-picker button {
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .lang-picker button:hover {
+      color: var(--text);
+      border-color: rgba(61, 143, 90, 0.45);
+    }
+
+    .lang-picker button.is-active {
+      background: var(--accent-soft);
+      border-color: rgba(61, 143, 90, 0.55);
+      color: #b8e6c8;
+      font-weight: 600;
+    }
+
     .hero {
       text-align: center;
-      padding: 56px 0 40px;
+      padding: 32px 0 40px;
     }
 
     .hero h1 {
@@ -68,7 +98,6 @@
       font-size: 0.9rem;
     }
 
-    /* Sections */
     section { margin-top: 48px; }
 
     section h2 {
@@ -82,7 +111,6 @@
       font-size: 0.95rem;
     }
 
-    /* Videos */
     .video-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -107,6 +135,7 @@
       border-style: solid;
       padding: 0;
       overflow: hidden;
+      cursor: zoom-in;
     }
 
     .video-slot iframe,
@@ -136,7 +165,6 @@
       max-width: 240px;
     }
 
-    /* Screenshots — fiksna širina kao telefon, cijela slika vidljiva */
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -168,11 +196,6 @@
       width: 100%;
       height: auto;
       display: block;
-      vertical-align: top;
-      cursor: zoom-in;
-    }
-
-    .video-slot.has-video {
       cursor: zoom-in;
     }
 
@@ -190,7 +213,6 @@
       margin-bottom: 2px;
     }
 
-    /* Features list */
     .features {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -208,7 +230,6 @@
 
     .feature span { margin-right: 6px; }
 
-    /* Footer */
     footer {
       margin-top: 64px;
       padding-top: 32px;
@@ -230,7 +251,6 @@
 
     footer .contact { margin-top: 12px; }
 
-    /* Lightbox */
     .lightbox {
       position: fixed;
       inset: 0;
@@ -343,134 +363,73 @@
 <body>
   <div class="wrap">
     <header class="hero">
+      <nav class="lang-picker" aria-label="Language">
+        <button type="button" data-lang="en">English</button>
+        <button type="button" data-lang="hr">Hrvatski</button>
+        <button type="button" data-lang="de">Deutsch</button>
+      </nav>
       <h1>LifeKompas</h1>
-      <p class="tagline">Your personal compass for everyday life — offline, private, simple.</p>
-      <span class="pill">Offline · Private · Powerful</span>
+      <p class="tagline" data-i18n="tagline"></p>
+      <span class="pill" data-i18n="pill"></span>
     </header>
 
     <section id="videos">
-      <h2>Video / Demo</h2>
-      <p class="sub">Demo videos coming soon.</p>
-
+      <h2 data-i18n="videosTitle"></h2>
+      <p class="sub" data-i18n="videosSub"></p>
       <div class="video-grid">
         <div class="video-slot" id="video-slot-1">
           <span class="placeholder-icon">▶</span>
-          <span class="placeholder-label">Demo 1 — coming soon</span>
-          <span class="placeholder-hint">App overview</span>
+          <span class="placeholder-label" data-i18n="demo1Label"></span>
+          <span class="placeholder-hint" data-i18n="demo1Hint"></span>
         </div>
-
         <div class="video-slot" id="video-slot-2">
           <span class="placeholder-icon">▶</span>
-          <span class="placeholder-label">Demo 2 — coming soon</span>
-          <span class="placeholder-hint">Quick module tour</span>
+          <span class="placeholder-label" data-i18n="demo2Label"></span>
+          <span class="placeholder-hint" data-i18n="demo2Hint"></span>
         </div>
-
         <div class="video-slot" id="video-slot-3">
           <span class="placeholder-icon">▶</span>
-          <span class="placeholder-label">Demo 3 — coming soon</span>
-          <span class="placeholder-hint">Assistant &amp; reminders</span>
+          <span class="placeholder-label" data-i18n="demo3Label"></span>
+          <span class="placeholder-hint" data-i18n="demo3Hint"></span>
         </div>
       </div>
     </section>
 
     <section id="modules">
-      <h2>Modules</h2>
-      <p class="sub">Everything in one place — no account, no cloud.</p>
-
+      <h2 data-i18n="modulesTitle"></h2>
+      <p class="sub" data-i18n="modulesSub"></p>
       <div class="features">
-        <div class="feature"><span>🧭</span> Obligations &amp; calendar</div>
-        <div class="feature"><span>🛒</span> Shopping list</div>
-        <div class="feature"><span>⏳</span> Deadlines &amp; warranties</div>
-        <div class="feature"><span>💰</span> Finances</div>
-        <div class="feature"><span>❤️</span> Health</div>
-        <div class="feature"><span>📓</span> Diary</div>
-        <div class="feature"><span>🛠️</span> Work log</div>
-        <div class="feature"><span>✨</span> Assistant</div>
+        <div class="feature"><span>🧭</span> <span data-i18n="modObligations"></span></div>
+        <div class="feature"><span>🛒</span> <span data-i18n="modShopping"></span></div>
+        <div class="feature"><span>⏳</span> <span data-i18n="modDeadlines"></span></div>
+        <div class="feature"><span>💰</span> <span data-i18n="modFinances"></span></div>
+        <div class="feature"><span>❤️</span> <span data-i18n="modHealth"></span></div>
+        <div class="feature"><span>📓</span> <span data-i18n="modDiary"></span></div>
+        <div class="feature"><span>🛠️</span> <span data-i18n="modWorklog"></span></div>
+        <div class="feature"><span>✨</span> <span data-i18n="modAssistant"></span></div>
       </div>
     </section>
 
     <section id="screenshots">
-      <h2>App in action</h2>
-      <p class="sub">Screens from the current release. Tap any screenshot to enlarge.</p>
-
-      <div class="gallery">
-        <figure class="shot">
-          <img src="assets/screenshots/01-language.png" alt="Language selection" loading="lazy" width="390" height="844">
-          <figcaption><strong>Language</strong>20+ languages</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/screenshots/02-home.png" alt="Home screen" loading="lazy" width="390" height="844">
-          <figcaption><strong>Home</strong>All modules at a glance</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/screenshots/03-obligations-today.png" alt="Today's obligations" loading="lazy" width="390" height="844">
-          <figcaption><strong>Today's obligations</strong>A calm task list</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/screenshots/04-obligations-calendar.png" alt="Obligations calendar" loading="lazy" width="390" height="844">
-          <figcaption><strong>Calendar</strong>Birthdays &amp; obligations</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/screenshots/05-shopping.png" alt="Shopping list" loading="lazy" width="390" height="844">
-          <figcaption><strong>Shopping</strong>Quick grocery list</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/screenshots/06-deadlines.png" alt="Deadlines and warranties" loading="lazy" width="390" height="844">
-          <figcaption><strong>Deadlines &amp; warranties</strong>Next 15 days at a glance</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/screenshots/07-deadlines-new.png" alt="New deadline or warranty" loading="lazy" width="390" height="844">
-          <figcaption><strong>New entry</strong>Document, warranty, or service</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/screenshots/08-finances.png" alt="Finances" loading="lazy" width="390" height="844">
-          <figcaption><strong>Finances</strong>Income, expenses, overview</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/screenshots/09-finances-new.png" alt="New finance entry" loading="lazy" width="390" height="844">
-          <figcaption><strong>New entry</strong>One-time or recurring</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/screenshots/10-health.png" alt="Health" loading="lazy" width="390" height="844">
-          <figcaption><strong>Health</strong>BP, glucose, weight, medicine</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/screenshots/11-diary.png" alt="Diary" loading="lazy" width="390" height="844">
-          <figcaption><strong>Diary</strong>Mood &amp; notes</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/screenshots/12-worklog.png" alt="Work log" loading="lazy" width="390" height="844">
-          <figcaption><strong>Work log</strong>Hours tracked by month</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/screenshots/13-worklog-new.png" alt="New work log entry" loading="lazy" width="390" height="844">
-          <figcaption><strong>New entry</strong>Date, hours, break</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/screenshots/14-assistant.png" alt="Assistant" loading="lazy" width="390" height="844">
-          <figcaption><strong>Assistant</strong>What matters today</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/screenshots/15-assistant-settings.png" alt="Assistant settings" loading="lazy" width="390" height="844">
-          <figcaption><strong>Settings</strong>Morning overview &amp; modules</figcaption>
-        </figure>
-      </div>
+      <h2 data-i18n="screenshotsTitle"></h2>
+      <p class="sub" data-i18n="screenshotsSub"></p>
+      <div class="gallery" id="gallery"></div>
     </section>
 
     <footer>
       <nav>
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="terms.html">Terms of Use</a>
+        <a href="privacy.html" id="link-privacy" data-i18n="privacyLink"></a>
+        <a href="terms.html" id="link-terms" data-i18n="termsLink"></a>
       </nav>
-      <p>LifeKompas — Offline. Private. Powerful.</p>
-      <p class="contact">Contact: <a href="mailto:lifekompas1@gmail.com">lifekompas1@gmail.com</a></p>
+      <p data-i18n="footerTagline"></p>
+      <p class="contact"><span data-i18n="contactLabel"></span> <a href="mailto:lifekompas1@gmail.com">lifekompas1@gmail.com</a></p>
     </footer>
   </div>
 
-  <div id="lightbox" class="lightbox" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="Enlarged view">
-    <button type="button" class="lightbox-close" aria-label="Close">×</button>
-    <button type="button" class="lightbox-prev" aria-label="Previous" hidden>‹</button>
-    <button type="button" class="lightbox-next" aria-label="Next" hidden>›</button>
+  <div id="lightbox" class="lightbox" hidden aria-hidden="true" role="dialog" aria-modal="true">
+    <button type="button" class="lightbox-close" data-i18n-aria="lightboxClose">×</button>
+    <button type="button" class="lightbox-prev" data-i18n-aria="lightboxPrev" hidden>‹</button>
+    <button type="button" class="lightbox-next" data-i18n-aria="lightboxNext" hidden>›</button>
     <div class="lightbox-panel" id="lightbox-panel">
       <div class="lightbox-media" id="lightbox-media"></div>
       <p class="lightbox-caption" id="lightbox-caption"></p>
@@ -479,6 +438,185 @@
 
   <script>
     (function () {
+      var LANG_KEY = 'lk-web-lang';
+      var LANGS = ['en', 'hr', 'de'];
+
+      var SHOTS = [
+        { file: '01-language.png', key: 'shot01' },
+        { file: '02-home.png', key: 'shot02' },
+        { file: '03-obligations-today.png', key: 'shot03' },
+        { file: '04-obligations-calendar.png', key: 'shot04' },
+        { file: '05-shopping.png', key: 'shot05' },
+        { file: '06-deadlines.png', key: 'shot06' },
+        { file: '07-deadlines-new.png', key: 'shot07' },
+        { file: '08-finances.png', key: 'shot08' },
+        { file: '09-finances-new.png', key: 'shot09' },
+        { file: '10-health.png', key: 'shot10' },
+        { file: '11-diary.png', key: 'shot11' },
+        { file: '12-worklog.png', key: 'shot12' },
+        { file: '13-worklog-new.png', key: 'shot13' },
+        { file: '14-assistant.png', key: 'shot14' },
+        { file: '15-assistant-settings.png', key: 'shot15' }
+      ];
+
+      var PACK = {
+        en: {
+          metaDescription: 'LifeKompas — offline personal organizer: obligations, shopping, finances, health, diary and more.',
+          lightboxDialog: 'Enlarged view',
+          lightboxClose: 'Close',
+          lightboxPrev: 'Previous',
+          lightboxNext: 'Next',
+          enlarge: 'Enlarge',
+          tagline: 'Your personal compass for everyday life — offline, private, simple.',
+          pill: 'Offline · Private · Powerful',
+          videosTitle: 'Video / Demo',
+          videosSub: 'Demo videos coming soon.',
+          demo1Label: 'Demo 1 — coming soon',
+          demo1Hint: 'App overview',
+          demo2Label: 'Demo 2 — coming soon',
+          demo2Hint: 'Quick module tour',
+          demo3Label: 'Demo 3 — coming soon',
+          demo3Hint: 'Assistant & reminders',
+          modulesTitle: 'Modules',
+          modulesSub: 'Everything in one place — no account, no cloud.',
+          modObligations: 'Obligations & calendar',
+          modShopping: 'Shopping list',
+          modDeadlines: 'Deadlines & warranties',
+          modFinances: 'Finances',
+          modHealth: 'Health',
+          modDiary: 'Diary',
+          modWorklog: 'Work log',
+          modAssistant: 'Assistant',
+          screenshotsTitle: 'App in action',
+          screenshotsSub: 'Screens from the current release. Tap any screenshot to enlarge.',
+          privacyLink: 'Privacy Policy',
+          termsLink: 'Terms of Use',
+          footerTagline: 'LifeKompas — Offline. Private. Powerful.',
+          contactLabel: 'Contact:',
+          privacyHref: 'privacy.html#en',
+          termsHref: 'terms.html#en',
+          shot01: { title: 'Language', desc: '20+ languages', alt: 'Language selection' },
+          shot02: { title: 'Home', desc: 'All modules at a glance', alt: 'Home screen' },
+          shot03: { title: "Today's obligations", desc: 'A calm task list', alt: "Today's obligations" },
+          shot04: { title: 'Calendar', desc: 'Birthdays & obligations', alt: 'Obligations calendar' },
+          shot05: { title: 'Shopping', desc: 'Quick grocery list', alt: 'Shopping list' },
+          shot06: { title: 'Deadlines & warranties', desc: 'Next 15 days at a glance', alt: 'Deadlines and warranties' },
+          shot07: { title: 'New entry', desc: 'Document, warranty, or service', alt: 'New deadline or warranty' },
+          shot08: { title: 'Finances', desc: 'Income, expenses, overview', alt: 'Finances' },
+          shot09: { title: 'New entry', desc: 'One-time or recurring', alt: 'New finance entry' },
+          shot10: { title: 'Health', desc: 'BP, glucose, weight, medicine', alt: 'Health' },
+          shot11: { title: 'Diary', desc: 'Mood & notes', alt: 'Diary' },
+          shot12: { title: 'Work log', desc: 'Hours tracked by month', alt: 'Work log' },
+          shot13: { title: 'New entry', desc: 'Date, hours, break', alt: 'New work log entry' },
+          shot14: { title: 'Assistant', desc: 'What matters today', alt: 'Assistant' },
+          shot15: { title: 'Settings', desc: 'Morning overview & modules', alt: 'Assistant settings' }
+        },
+        hr: {
+          metaDescription: 'LifeKompas — offline organizator: obveze, kupovina, financije, zdravlje, dnevnik i više.',
+          lightboxDialog: 'Povećani prikaz',
+          lightboxClose: 'Zatvori',
+          lightboxPrev: 'Prethodna',
+          lightboxNext: 'Sljedeća',
+          enlarge: 'Povećaj',
+          tagline: 'Tvoj osobni kompas za svakodnevni život — offline, privatno, jednostavno.',
+          pill: 'Offline · Private · Powerful',
+          videosTitle: 'Video / Demo',
+          videosSub: 'Demo snimke uskoro.',
+          demo1Label: 'Demo 1 — uskoro',
+          demo1Hint: 'Pregled app-a',
+          demo2Label: 'Demo 2 — uskoro',
+          demo2Hint: 'Brzi pregled modula',
+          demo3Label: 'Demo 3 — uskoro',
+          demo3Hint: 'Pomoćnik i podsjetnici',
+          modulesTitle: 'Moduli',
+          modulesSub: 'Sve na jednom mjestu — bez računa, bez oblaka.',
+          modObligations: 'Obveze & kalendar',
+          modShopping: 'Shopping lista',
+          modDeadlines: 'Rokovi & garancije',
+          modFinances: 'Financije',
+          modHealth: 'Zdravlje',
+          modDiary: 'Dnevnik',
+          modWorklog: 'Radni dnevnik',
+          modAssistant: 'Pomoćnik',
+          screenshotsTitle: 'App u praksi',
+          screenshotsSub: 'Ekrani iz trenutne verzije. Dodirni screenshot za povećanje.',
+          privacyLink: 'Pravila privatnosti',
+          termsLink: 'Uvjeti korištenja',
+          footerTagline: 'LifeKompas — Offline. Private. Powerful.',
+          contactLabel: 'Kontakt:',
+          privacyHref: 'privacy.html#hr',
+          termsHref: 'terms.html#hr',
+          shot01: { title: 'Jezik', desc: '20+ jezika', alt: 'Odabir jezika' },
+          shot02: { title: 'Početni ekran', desc: 'Moduli na dlanu', alt: 'Početni ekran' },
+          shot03: { title: 'Današnje obveze', desc: 'Mirna lista zadataka', alt: 'Današnje obveze' },
+          shot04: { title: 'Kalendar', desc: 'Rođendani & obveze', alt: 'Kalendar obveza' },
+          shot05: { title: 'Shopping', desc: 'Brza lista za trgovinu', alt: 'Shopping lista' },
+          shot06: { title: 'Rokovi & garancije', desc: 'Pregled sljedećih 15 dana', alt: 'Rokovi i garancije' },
+          shot07: { title: 'Novi unos', desc: 'Dokument, garancija, servis', alt: 'Novi rok ili garancija' },
+          shot08: { title: 'Financije', desc: 'Prihodi, troškovi, pregled', alt: 'Financije' },
+          shot09: { title: 'Novi unos', desc: 'Jednokratno ili ponavljajuće', alt: 'Novi financijski unos' },
+          shot10: { title: 'Zdravlje', desc: 'TL, šećer, težina, lijekovi', alt: 'Zdravlje' },
+          shot11: { title: 'Dnevnik', desc: 'Raspoloženje & bilješke', alt: 'Dnevnik' },
+          shot12: { title: 'Radni dnevnik', desc: 'Sati rada po mjesecu', alt: 'Radni dnevnik' },
+          shot13: { title: 'Novi unos', desc: 'Datum, sati, pauza', alt: 'Novi unos radnog dnevnika' },
+          shot14: { title: 'Pomoćnik', desc: 'Što je danas važno', alt: 'Pomoćnik' },
+          shot15: { title: 'Postavke', desc: 'Jutarnji pregled & moduli', alt: 'Postavke pomoćnika' }
+        },
+        de: {
+          metaDescription: 'LifeKompas — offline Organizer: Aufgaben, Einkauf, Finanzen, Gesundheit, Tagebuch und mehr.',
+          lightboxDialog: 'Vergrößerte Ansicht',
+          lightboxClose: 'Schließen',
+          lightboxPrev: 'Zurück',
+          lightboxNext: 'Weiter',
+          enlarge: 'Vergrößern',
+          tagline: 'Dein persönlicher Kompass für den Alltag — offline, privat, einfach.',
+          pill: 'Offline · Private · Powerful',
+          videosTitle: 'Video / Demo',
+          videosSub: 'Demo-Videos demnächst.',
+          demo1Label: 'Demo 1 — demnächst',
+          demo1Hint: 'App-Überblick',
+          demo2Label: 'Demo 2 — demnächst',
+          demo2Hint: 'Kurzer Modul-Rundgang',
+          demo3Label: 'Demo 3 — demnächst',
+          demo3Hint: 'Assistent & Erinnerungen',
+          modulesTitle: 'Module',
+          modulesSub: 'Alles an einem Ort — kein Konto, keine Cloud.',
+          modObligations: 'Aufgaben & Kalender',
+          modShopping: 'Einkaufsliste',
+          modDeadlines: 'Fristen & Garantien',
+          modFinances: 'Finanzen',
+          modHealth: 'Gesundheit',
+          modDiary: 'Tagebuch',
+          modWorklog: 'Arbeitsprotokoll',
+          modAssistant: 'Assistent',
+          screenshotsTitle: 'App in Aktion',
+          screenshotsSub: 'Screenshots der aktuellen Version. Tippe zum Vergrößern.',
+          privacyLink: 'Datenschutz',
+          termsLink: 'Nutzungsbedingungen',
+          footerTagline: 'LifeKompas — Offline. Private. Powerful.',
+          contactLabel: 'Kontakt:',
+          privacyHref: 'privacy.html#en',
+          termsHref: 'terms.html#en',
+          shot01: { title: 'Sprache', desc: '20+ Sprachen', alt: 'Sprachauswahl' },
+          shot02: { title: 'Startseite', desc: 'Alle Module im Überblick', alt: 'Startseite' },
+          shot03: { title: 'Heutige Aufgaben', desc: 'Ruhige Aufgabenliste', alt: 'Heutige Aufgaben' },
+          shot04: { title: 'Kalender', desc: 'Geburtstage & Aufgaben', alt: 'Aufgaben-Kalender' },
+          shot05: { title: 'Einkauf', desc: 'Schnelle Einkaufsliste', alt: 'Einkaufsliste' },
+          shot06: { title: 'Fristen & Garantien', desc: 'Nächste 15 Tage im Blick', alt: 'Fristen und Garantien' },
+          shot07: { title: 'Neuer Eintrag', desc: 'Dokument, Garantie oder Service', alt: 'Neue Frist oder Garantie' },
+          shot08: { title: 'Finanzen', desc: 'Einnahmen, Ausgaben, Überblick', alt: 'Finanzen' },
+          shot09: { title: 'Neuer Eintrag', desc: 'Einmalig oder wiederkehrend', alt: 'Neuer Finanzeintrag' },
+          shot10: { title: 'Gesundheit', desc: 'Blutdruck, Zucker, Gewicht, Medikamente', alt: 'Gesundheit' },
+          shot11: { title: 'Tagebuch', desc: 'Stimmung & Notizen', alt: 'Tagebuch' },
+          shot12: { title: 'Arbeitsprotokoll', desc: 'Stunden pro Monat', alt: 'Arbeitsprotokoll' },
+          shot13: { title: 'Neuer Eintrag', desc: 'Datum, Stunden, Pause', alt: 'Neuer Arbeitseintrag' },
+          shot14: { title: 'Assistent', desc: 'Was heute wichtig ist', alt: 'Assistent' },
+          shot15: { title: 'Einstellungen', desc: 'Morgenüberblick & Module', alt: 'Assistent-Einstellungen' }
+        }
+      };
+
+      var currentLang = 'en';
+      var galleryEl = document.getElementById('gallery');
       var lightbox = document.getElementById('lightbox');
       var panel = document.getElementById('lightbox-panel');
       var media = document.getElementById('lightbox-media');
@@ -486,67 +624,139 @@
       var btnClose = lightbox.querySelector('.lightbox-close');
       var btnPrev = lightbox.querySelector('.lightbox-prev');
       var btnNext = lightbox.querySelector('.lightbox-next');
-      var items = [];
-      var index = 0;
+      var lightboxItems = [];
+      var lightboxIndex = 0;
 
-      document.querySelectorAll('.gallery .shot').forEach(function (fig) {
-        var img = fig.querySelector('img');
-        if (!img) return;
-        var title = fig.querySelector('figcaption strong');
-        var itemIndex = items.length;
-        items.push({
-          type: 'image',
-          src: img.currentSrc || img.src,
-          alt: img.alt || '',
-          label: title ? title.textContent : img.alt
+      function detectLang() {
+        var saved = localStorage.getItem(LANG_KEY);
+        if (saved && LANGS.indexOf(saved) !== -1) return saved;
+        var nav = (navigator.language || 'en').slice(0, 2).toLowerCase();
+        if (LANGS.indexOf(nav) !== -1) return nav;
+        return 'en';
+      }
+
+      function t(key) {
+        return PACK[currentLang][key];
+      }
+
+      function shotPath(file) {
+        return 'assets/screenshots/' + currentLang + '/' + file;
+      }
+
+      function applyTexts() {
+        var pack = PACK[currentLang];
+        document.documentElement.lang = currentLang;
+        document.querySelector('meta[name="description"]').setAttribute('content', pack.metaDescription);
+        lightbox.setAttribute('aria-label', pack.lightboxDialog);
+
+        document.querySelectorAll('[data-i18n]').forEach(function (el) {
+          var key = el.getAttribute('data-i18n');
+          if (pack[key] != null) el.textContent = pack[key];
         });
-        img.setAttribute('role', 'button');
-        img.setAttribute('tabindex', '0');
-        img.setAttribute('aria-label', 'Enlarge: ' + (img.alt || 'screenshot'));
-        img.addEventListener('click', function () {
-          openAt(itemIndex);
+
+        document.querySelectorAll('[data-i18n-aria]').forEach(function (el) {
+          var key = el.getAttribute('data-i18n-aria');
+          if (pack[key] != null) el.setAttribute('aria-label', pack[key]);
         });
-        img.addEventListener('keydown', function (e) {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            openAt(itemIndex);
+
+        document.getElementById('link-privacy').href = pack.privacyHref;
+        document.getElementById('link-terms').href = pack.termsHref;
+
+        document.querySelectorAll('.lang-picker button').forEach(function (btn) {
+          btn.classList.toggle('is-active', btn.getAttribute('data-lang') === currentLang);
+        });
+      }
+
+      function buildGallery() {
+        var pack = PACK[currentLang];
+        galleryEl.innerHTML = '';
+        lightboxItems = [];
+
+        SHOTS.forEach(function (shot, i) {
+          var meta = pack[shot.key];
+          var fig = document.createElement('figure');
+          fig.className = 'shot';
+
+          var img = document.createElement('img');
+          img.src = shotPath(shot.file);
+          img.alt = meta.alt;
+          img.loading = i < 4 ? 'eager' : 'lazy';
+          img.width = 390;
+          img.height = 844;
+
+          var cap = document.createElement('figcaption');
+          var strong = document.createElement('strong');
+          strong.textContent = meta.title;
+          cap.appendChild(strong);
+          cap.appendChild(document.createTextNode(meta.desc));
+
+          fig.appendChild(img);
+          fig.appendChild(cap);
+          galleryEl.appendChild(fig);
+
+          lightboxItems.push({
+            type: 'image',
+            src: shotPath(shot.file),
+            alt: meta.alt,
+            label: meta.title
+          });
+
+          img.setAttribute('role', 'button');
+          img.setAttribute('tabindex', '0');
+          img.setAttribute('aria-label', pack.enlarge + ': ' + meta.alt);
+          img.addEventListener('click', function () { openLightbox(i); });
+          img.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              openLightbox(i);
+            }
+          });
+        });
+      }
+
+      function appendVideoLightboxItems() {
+        var pack = PACK[currentLang];
+        document.querySelectorAll('.video-slot.has-video').forEach(function (slot) {
+          var iframe = slot.querySelector('iframe');
+          var video = slot.querySelector('video');
+          var labelEl = slot.querySelector('.placeholder-label');
+          var label = labelEl ? labelEl.textContent : 'Demo video';
+          var itemIndex = lightboxItems.length;
+          var item = { type: 'video', label: label };
+          if (iframe) {
+            item.embedSrc = iframe.src;
+          } else if (video) {
+            var source = video.querySelector('source');
+            item.videoSrc = source ? source.src : video.currentSrc || video.src;
+            item.poster = video.poster || '';
+          } else {
+            return;
           }
+          lightboxItems.push(item);
+          slot.setAttribute('role', 'button');
+          slot.setAttribute('tabindex', '0');
+          slot.setAttribute('aria-label', pack.enlarge + ': ' + label);
+          slot.onclick = function () { openLightbox(itemIndex); };
+          slot.onkeydown = function (e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              openLightbox(itemIndex);
+            }
+          };
         });
-      });
+      }
 
-      document.querySelectorAll('.video-slot.has-video').forEach(function (slot) {
-        var iframe = slot.querySelector('iframe');
-        var video = slot.querySelector('video');
-        var labelEl = slot.querySelector('.placeholder-label');
-        var label = labelEl ? labelEl.textContent : 'Demo video';
-        var itemIndex = items.length;
-        var item = { type: 'video', label: label };
-        if (iframe) {
-          item.embedSrc = iframe.src;
-        } else if (video) {
-          var source = video.querySelector('source');
-          item.videoSrc = source ? source.src : video.currentSrc || video.src;
-          item.poster = video.poster || '';
-        } else {
-          return;
-        }
-        items.push(item);
-        slot.setAttribute('role', 'button');
-        slot.setAttribute('tabindex', '0');
-        slot.setAttribute('aria-label', 'Play enlarged: ' + label);
-        slot.addEventListener('click', function () {
-          openAt(itemIndex);
-        });
-        slot.addEventListener('keydown', function (e) {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            openAt(itemIndex);
-          }
-        });
-      });
+      function setLang(lang) {
+        if (LANGS.indexOf(lang) === -1) return;
+        currentLang = lang;
+        localStorage.setItem(LANG_KEY, lang);
+        applyTexts();
+        buildGallery();
+        appendVideoLightboxItems();
+      }
 
-      function render() {
-        var item = items[index];
+      function renderLightbox() {
+        var item = lightboxItems[lightboxIndex];
         media.innerHTML = '';
         caption.textContent = item.label || '';
         panel.classList.toggle('is-video', item.type === 'video');
@@ -575,47 +785,53 @@
           media.appendChild(vid);
         }
 
-        var showNav = items.length > 1 && items.every(function (i) { return i.type === 'image'; });
+        var showNav = lightboxItems.length > 1 && lightboxItems.every(function (i) { return i.type === 'image'; });
         btnPrev.hidden = !showNav;
         btnNext.hidden = !showNav;
       }
 
-      function openAt(i) {
-        if (!items.length) return;
-        index = i;
-        render();
+      function openLightbox(i) {
+        if (!lightboxItems.length) return;
+        lightboxIndex = i;
+        renderLightbox();
         lightbox.hidden = false;
         lightbox.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
         btnClose.focus();
       }
 
-      function close() {
+      function closeLightbox() {
         lightbox.hidden = true;
         lightbox.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
         media.innerHTML = '';
       }
 
-      function step(delta) {
-        index = (index + delta + items.length) % items.length;
-        render();
+      function stepLightbox(delta) {
+        lightboxIndex = (lightboxIndex + delta + lightboxItems.length) % lightboxItems.length;
+        renderLightbox();
       }
 
-      btnClose.addEventListener('click', close);
-      btnPrev.addEventListener('click', function () { step(-1); });
-      btnNext.addEventListener('click', function () { step(1); });
-
-      lightbox.addEventListener('click', function (e) {
-        if (e.target === lightbox) close();
+      document.querySelectorAll('.lang-picker button').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          setLang(btn.getAttribute('data-lang'));
+        });
       });
 
+      btnClose.addEventListener('click', closeLightbox);
+      btnPrev.addEventListener('click', function () { stepLightbox(-1); });
+      btnNext.addEventListener('click', function () { stepLightbox(1); });
+      lightbox.addEventListener('click', function (e) {
+        if (e.target === lightbox) closeLightbox();
+      });
       document.addEventListener('keydown', function (e) {
         if (lightbox.hidden) return;
-        if (e.key === 'Escape') close();
-        if (e.key === 'ArrowLeft' && !btnPrev.hidden) step(-1);
-        if (e.key === 'ArrowRight' && !btnNext.hidden) step(1);
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft' && !btnPrev.hidden) stepLightbox(-1);
+        if (e.key === 'ArrowRight' && !btnNext.hidden) stepLightbox(1);
       });
+
+      setLang(detectLang());
     })();
   </script>
 </body>
