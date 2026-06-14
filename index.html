@@ -230,6 +230,42 @@
 
     .feature span { margin-right: 6px; }
 
+    .hero-guide-link {
+      display: inline-block;
+      margin-top: 16px;
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .guide-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 24px 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .guide-list {
+      margin: 0;
+      padding-left: 1.2em;
+      color: var(--text);
+    }
+
+    .guide-list li {
+      margin-bottom: 12px;
+      padding-left: 4px;
+    }
+
+    .guide-list li:last-child { margin-bottom: 0; }
+
+    .guide-footnote {
+      margin: 20px 0 0;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
     footer {
       margin-top: 64px;
       padding-top: 32px;
@@ -371,6 +407,7 @@
       <h1>LifeKompas</h1>
       <p class="tagline" data-i18n="tagline"></p>
       <span class="pill" data-i18n="pill"></span>
+      <a href="#guide" class="hero-guide-link" data-i18n="guideJump"></a>
     </header>
 
     <section id="videos">
@@ -407,6 +444,15 @@
         <div class="feature"><span>📓</span> <span data-i18n="modDiary"></span></div>
         <div class="feature"><span>🛠️</span> <span data-i18n="modWorklog"></span></div>
         <div class="feature"><span>✨</span> <span data-i18n="modAssistant"></span></div>
+      </div>
+    </section>
+
+    <section id="guide">
+      <h2 data-i18n="guideTitle"></h2>
+      <p class="sub" data-i18n="guideSub"></p>
+      <div class="guide-card">
+        <ul class="guide-list" id="guide-list"></ul>
+        <p class="guide-footnote" id="guide-footnote"></p>
       </div>
     </section>
 
@@ -487,6 +533,19 @@
           modDiary: 'Diary',
           modWorklog: 'Work log',
           modAssistant: 'Assistant',
+          guideJump: 'Quick guide ↓',
+          guideTitle: 'Quick guide',
+          guideSub: 'How to get started with LifeKompas.',
+          guideSteps: [
+            'Choose a module from the home screen.',
+            'Obligations: turn on reminder when saving — notifications work offline too.',
+            'Deadlines & warranties: registration, policies, devices — add dates; reminders via Assistant.',
+            'Birthdays: Obligations → calendar → Add birthday; see upcoming in Assistant.',
+            'Assistant: day overview on open; ⚙ for reminders and morning overview; modules under Advanced.',
+            'Language: change in Settings (⚙) or at the bottom of the home screen.',
+            'Before uninstalling: Settings → Export backup (Drive, iCloud, email…).'
+          ],
+          guideFootnote: 'Your data stays on your device — no account, no cloud.',
           screenshotsTitle: 'App in action',
           screenshotsSub: 'Screens from the current release. Tap any screenshot to enlarge.',
           privacyLink: 'Privacy Policy',
@@ -538,6 +597,19 @@
           modDiary: 'Dnevnik',
           modWorklog: 'Radni dnevnik',
           modAssistant: 'Pomoćnik',
+          guideJump: 'Kratka uputa ↓',
+          guideTitle: 'Kratka uputa',
+          guideSub: 'Kako početi koristiti LifeKompas.',
+          guideSteps: [
+            'Na početnom ekranu odaberi modul.',
+            'Obveze: pri spremanju uključi podsjetnik — obavijesti rade i offline.',
+            'Rokovi i garancije: registracija, police, uređaji — unesi datume; podsjetnici preko Pomoćnika.',
+            'Rođendani: Obveze → kalendar → Dodaj rođendan; nadolazeće vidi u Pomoćniku.',
+            'Pomoćnik: pregled dana; u ⚙ podsjetnici i jutarnji pregled; module u Napredno.',
+            'Jezik: promijeni u Postavkama (⚙) ili dolje na početnom ekranu.',
+            'Prije brisanja app-a: Postavke → Izvezi sigurnosnu kopiju (Drive, iCloud, mail…).'
+          ],
+          guideFootnote: 'Podaci ostaju na tvom uređaju — bez računa, bez oblaka.',
           screenshotsTitle: 'App u praksi',
           screenshotsSub: 'Ekrani iz trenutne verzije. Dodirni screenshot za povećanje.',
           privacyLink: 'Pravila privatnosti',
@@ -589,6 +661,19 @@
           modDiary: 'Tagebuch',
           modWorklog: 'Arbeitsprotokoll',
           modAssistant: 'Assistent',
+          guideJump: 'Kurzanleitung ↓',
+          guideTitle: 'Kurzanleitung',
+          guideSub: 'So startest du mit LifeKompas.',
+          guideSteps: [
+            'Wähle auf dem Startbildschirm ein Modul.',
+            'Verpflichtungen: Beim Speichern Erinnerung aktivieren — Benachrichtigungen funktionieren auch offline.',
+            'Fristen & Garantien: Zulassung, Versicherung, Geräte — Termine eintragen; Erinnerungen über den Assistenten.',
+            'Geburtstage: Verpflichtungen → Kalender → Geburtstag hinzufügen; Anstehendes im Assistenten sehen.',
+            'Assistent: Tagesübersicht beim Öffnen; ⚙ für Erinnerungen und Morgenüberblick; Module unter Erweitert.',
+            'Sprache: unter Einstellungen (⚙) oder unten auf dem Startbildschirm.',
+            'Vor dem Deinstallieren: Einstellungen → Sicherungskopie exportieren (Drive, iCloud, E-Mail…).'
+          ],
+          guideFootnote: 'Deine Daten bleiben auf dem Gerät — kein Konto, keine Cloud.',
           screenshotsTitle: 'App in Aktion',
           screenshotsSub: 'Screenshots der aktuellen Version. Tippe zum Vergrößern.',
           privacyLink: 'Datenschutz',
@@ -617,6 +702,8 @@
 
       var currentLang = 'en';
       var galleryEl = document.getElementById('gallery');
+      var guideListEl = document.getElementById('guide-list');
+      var guideFootnoteEl = document.getElementById('guide-footnote');
       var lightbox = document.getElementById('lightbox');
       var panel = document.getElementById('lightbox-panel');
       var media = document.getElementById('lightbox-media');
@@ -665,6 +752,19 @@
         document.querySelectorAll('.lang-picker button').forEach(function (btn) {
           btn.classList.toggle('is-active', btn.getAttribute('data-lang') === currentLang);
         });
+
+        buildGuide();
+      }
+
+      function buildGuide() {
+        var pack = PACK[currentLang];
+        guideListEl.innerHTML = '';
+        (pack.guideSteps || []).forEach(function (step) {
+          var li = document.createElement('li');
+          li.textContent = step;
+          guideListEl.appendChild(li);
+        });
+        guideFootnoteEl.textContent = pack.guideFootnote || '';
       }
 
       function buildGallery() {
