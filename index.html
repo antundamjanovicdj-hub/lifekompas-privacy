@@ -1490,11 +1490,15 @@
         if (e.key === 'ArrowRight' && !btnNext.hidden) stepLightbox(1);
       });
 
-      function syncGuideDetails() {
+      function initGuideDetails() {
         if (!guideDetailsEl) return;
         if (window.matchMedia('(min-width: 900px)').matches) {
           guideDetailsEl.setAttribute('open', '');
-        } else if (location.hash !== '#guide') {
+          return;
+        }
+        if (location.hash === '#guide') {
+          guideDetailsEl.setAttribute('open', '');
+        } else {
           guideDetailsEl.removeAttribute('open');
         }
       }
@@ -1511,6 +1515,12 @@
           if (guideDetailsEl) guideDetailsEl.setAttribute('open', '');
         });
       }
+
+      window.matchMedia('(min-width: 900px)').addEventListener('change', function (e) {
+        if (guideDetailsEl && e.matches) {
+          guideDetailsEl.setAttribute('open', '');
+        }
+      });
 
       function initReveal() {
         var reveals = document.querySelectorAll('.reveal');
@@ -1534,9 +1544,8 @@
       }
 
       setLang(detectLang());
-      syncGuideDetails();
+      initGuideDetails();
       openGuideFromHash();
-      window.addEventListener('resize', syncGuideDetails);
       window.addEventListener('hashchange', openGuideFromHash);
       initReveal();
     })();
