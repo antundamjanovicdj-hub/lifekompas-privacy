@@ -634,19 +634,29 @@
       align-items: center;
       justify-content: center;
       padding: 16px;
+      padding-top: calc(16px + env(safe-area-inset-top, 0px));
+      padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
       background: rgba(5, 10, 18, 0.92);
       backdrop-filter: blur(8px);
+      touch-action: manipulation;
     }
 
     .lightbox[hidden] { display: none; }
 
     .lightbox-panel {
       position: relative;
+      z-index: 1001;
       max-width: min(420px, 100%);
       max-height: calc(100vh - 80px);
       display: flex;
       flex-direction: column;
       align-items: center;
+      pointer-events: none;
+    }
+
+    .lightbox-panel .lightbox-media,
+    .lightbox-panel .lightbox-caption {
+      pointer-events: auto;
     }
 
     .lightbox-panel.is-video {
@@ -691,13 +701,16 @@
     .lightbox-prev,
     .lightbox-next {
       position: fixed;
+      z-index: 1010;
       border: 1px solid var(--border);
-      background: rgba(15, 23, 36, 0.88);
+      background: rgba(15, 23, 36, 0.92);
       color: var(--text);
       border-radius: 999px;
       cursor: pointer;
       line-height: 1;
       transition: background 0.15s ease;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .lightbox-close:hover,
@@ -707,11 +720,11 @@
     }
 
     .lightbox-close {
-      top: 16px;
-      right: 16px;
-      width: 44px;
-      height: 44px;
-      font-size: 1.6rem;
+      top: calc(12px + env(safe-area-inset-top, 0px));
+      right: calc(12px + env(safe-area-inset-right, 0px));
+      width: 48px;
+      height: 48px;
+      font-size: 1.75rem;
     }
 
     .lightbox-prev,
@@ -728,6 +741,81 @@
 
     .lightbox-prev[hidden],
     .lightbox-next[hidden] { display: none; }
+
+    .lightbox-mobile-bar {
+      display: none;
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1015;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px));
+      background: rgba(8, 18, 28, 0.96);
+      border-top: 1px solid var(--border);
+      touch-action: manipulation;
+    }
+
+    .lightbox-mobile-bar button {
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      border-radius: 12px;
+      min-height: 44px;
+      padding: 0 16px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .lightbox-mobile-bar .lb-step {
+      width: 48px;
+      padding: 0;
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+
+    .lightbox-mobile-bar .lb-close {
+      flex: 1;
+      max-width: 160px;
+      background: rgba(69, 160, 104, 0.25);
+      border-color: rgba(143, 212, 168, 0.4);
+    }
+
+    .lightbox-mobile-bar .lb-counter {
+      min-width: 3.2rem;
+      text-align: center;
+      font-size: 0.88rem;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    @media (max-width: 899px) {
+      .lightbox {
+        padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+      }
+
+      .lightbox-mobile-bar {
+        display: flex;
+      }
+
+      .lightbox-prev,
+      .lightbox-next {
+        display: none !important;
+      }
+
+      .lightbox-panel {
+        max-height: calc(100vh - 120px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+      }
+
+      .lightbox-media {
+        max-height: calc(100vh - 160px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+      }
+    }
 
     @media (max-width: 600px) {
       .lightbox-prev { left: 4px; }
@@ -854,6 +942,12 @@
       <div class="lightbox-media" id="lightbox-media"></div>
       <p class="lightbox-caption" id="lightbox-caption"></p>
     </div>
+    <div class="lightbox-mobile-bar" id="lightbox-mobile-bar">
+      <button type="button" class="lb-step lb-prev" id="lb-mobile-prev" aria-label="Previous">‹</button>
+      <span class="lb-counter" id="lb-mobile-counter"></span>
+      <button type="button" class="lb-step lb-next" id="lb-mobile-next" aria-label="Next">›</button>
+      <button type="button" class="lb-close" id="lb-mobile-close" data-i18n="lightboxCloseLabel">Close</button>
+    </div>
   </div>
 
   <script>
@@ -884,6 +978,7 @@
           metaDescription: 'LifeKompas — offline personal organizer: obligations, shopping, finances, health, diary and more.',
           lightboxDialog: 'Enlarged view',
           lightboxClose: 'Close',
+          lightboxCloseLabel: 'Close',
           lightboxPrev: 'Previous',
           lightboxNext: 'Next',
           enlarge: 'Enlarge',
@@ -950,6 +1045,7 @@
           metaDescription: 'LifeKompas — offline organizator: obveze, kupovina, financije, zdravlje, dnevnik i više.',
           lightboxDialog: 'Povećani prikaz',
           lightboxClose: 'Zatvori',
+          lightboxCloseLabel: 'Zatvori',
           lightboxPrev: 'Prethodna',
           lightboxNext: 'Sljedeća',
           enlarge: 'Povećaj',
@@ -1016,6 +1112,7 @@
           metaDescription: 'LifeKompas — offline Organizer: Aufgaben, Einkauf, Finanzen, Gesundheit, Tagebuch und mehr.',
           lightboxDialog: 'Vergrößerte Ansicht',
           lightboxClose: 'Schließen',
+          lightboxCloseLabel: 'Schließen',
           lightboxPrev: 'Zurück',
           lightboxNext: 'Weiter',
           enlarge: 'Vergrößern',
@@ -1094,8 +1191,14 @@
       var btnClose = lightbox.querySelector('.lightbox-close');
       var btnPrev = lightbox.querySelector('.lightbox-prev');
       var btnNext = lightbox.querySelector('.lightbox-next');
+      var lbMobilePrev = document.getElementById('lb-mobile-prev');
+      var lbMobileNext = document.getElementById('lb-mobile-next');
+      var lbMobileClose = document.getElementById('lb-mobile-close');
+      var lbMobileCounter = document.getElementById('lb-mobile-counter');
       var lightboxItems = [];
       var lightboxIndex = 0;
+      var lightboxTouchStartX = 0;
+      var lightboxTouchStartY = 0;
 
       function detectLang() {
         var saved = localStorage.getItem(LANG_KEY);
@@ -1135,6 +1238,10 @@
         document.querySelectorAll('.lang-picker button').forEach(function (btn) {
           btn.classList.toggle('is-active', btn.getAttribute('data-lang') === currentLang);
         });
+
+        if (lbMobileClose && pack.lightboxCloseLabel) {
+          lbMobileClose.textContent = pack.lightboxCloseLabel;
+        }
 
         buildGuide();
         updateHeroShot();
@@ -1295,6 +1402,13 @@
         var showNav = lightboxItems.length > 1 && lightboxItems.every(function (i) { return i.type === 'image'; });
         btnPrev.hidden = !showNav;
         btnNext.hidden = !showNav;
+        if (lbMobilePrev) lbMobilePrev.hidden = !showNav;
+        if (lbMobileNext) lbMobileNext.hidden = !showNav;
+        if (lbMobileCounter) {
+          lbMobileCounter.textContent = showNav
+            ? (lightboxIndex + 1) + ' / ' + lightboxItems.length
+            : '';
+        }
       }
 
       function openLightbox(i) {
@@ -1328,9 +1442,26 @@
       btnClose.addEventListener('click', closeLightbox);
       btnPrev.addEventListener('click', function () { stepLightbox(-1); });
       btnNext.addEventListener('click', function () { stepLightbox(1); });
+      if (lbMobileClose) lbMobileClose.addEventListener('click', closeLightbox);
+      if (lbMobilePrev) lbMobilePrev.addEventListener('click', function () { stepLightbox(-1); });
+      if (lbMobileNext) lbMobileNext.addEventListener('click', function () { stepLightbox(1); });
       lightbox.addEventListener('click', function (e) {
         if (e.target === lightbox) closeLightbox();
       });
+      lightbox.addEventListener('touchstart', function (e) {
+        if (lightbox.hidden || e.touches.length !== 1) return;
+        lightboxTouchStartX = e.touches[0].clientX;
+        lightboxTouchStartY = e.touches[0].clientY;
+      }, { passive: true });
+      lightbox.addEventListener('touchend', function (e) {
+        if (lightbox.hidden || btnPrev.hidden) return;
+        var t = e.changedTouches[0];
+        var dx = t.clientX - lightboxTouchStartX;
+        var dy = t.clientY - lightboxTouchStartY;
+        if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy)) return;
+        if (dx < 0) stepLightbox(1);
+        else stepLightbox(-1);
+      }, { passive: true });
       document.addEventListener('keydown', function (e) {
         if (lightbox.hidden) return;
         if (e.key === 'Escape') closeLightbox();
