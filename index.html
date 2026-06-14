@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hr">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -53,13 +53,7 @@
       font-size: 1.15rem;
       color: var(--muted);
       max-width: 540px;
-      margin: 0 auto 8px;
-    }
-
-    .hero .tagline-en {
-      font-size: 0.95rem;
-      color: var(--muted);
-      opacity: 0.85;
+      margin: 0 auto;
     }
 
     .hero .pill {
@@ -235,133 +229,126 @@
   <div class="wrap">
     <header class="hero">
       <h1>LifeKompas</h1>
-      <p class="tagline">Tvoj osobni kompas za svakodnevni život — offline, privatno, jednostavno.</p>
-      <p class="tagline-en">Your personal compass for everyday life — offline, private, simple.</p>
+      <p class="tagline">Your personal compass for everyday life — offline, private, simple.</p>
       <span class="pill">Offline · Private · Powerful</span>
     </header>
 
-    <!-- VIDEO SECTION — dodaj iframe ili &lt;video&gt; u slot s klasom has-video -->
     <section id="videos">
       <h2>Video / Demo</h2>
-      <p class="sub">Uskoro demo snimke app-a. / Demo videos coming soon.</p>
+      <p class="sub">Demo videos coming soon.</p>
 
       <div class="video-grid">
-        <!-- Slot 1: zamijeni placeholder s YouTube iframe ili assets/videos/demo-1.mp4 -->
         <div class="video-slot" id="video-slot-1">
           <span class="placeholder-icon">▶</span>
-          <span class="placeholder-label">Demo 1 — uskoro</span>
-          <span class="placeholder-hint">YouTube: &lt;iframe src="https://www.youtube.com/embed/ID"&gt; ili MP4 u assets/videos/</span>
+          <span class="placeholder-label">Demo 1 — coming soon</span>
+          <span class="placeholder-hint">App overview</span>
         </div>
 
-        <!-- Slot 2 -->
         <div class="video-slot" id="video-slot-2">
           <span class="placeholder-icon">▶</span>
-          <span class="placeholder-label">Demo 2 — uskoro</span>
-          <span class="placeholder-hint">Brzi pregled modula / Quick tour</span>
+          <span class="placeholder-label">Demo 2 — coming soon</span>
+          <span class="placeholder-hint">Quick module tour</span>
         </div>
 
-        <!-- Slot 3 -->
         <div class="video-slot" id="video-slot-3">
           <span class="placeholder-icon">▶</span>
-          <span class="placeholder-label">Demo 3 — uskoro</span>
-          <span class="placeholder-hint">Pomoćnik i podsjetnici / Assistant &amp; reminders</span>
+          <span class="placeholder-label">Demo 3 — coming soon</span>
+          <span class="placeholder-hint">Assistant &amp; reminders</span>
         </div>
       </div>
     </section>
 
-    <!-- MODULES OVERVIEW -->
     <section id="modules">
-      <h2>Moduli / Modules</h2>
-      <p class="sub">Sve na jednom mjestu — bez računa, bez oblaka. / Everything in one place — no account, no cloud.</p>
+      <h2>Modules</h2>
+      <p class="sub">Everything in one place — no account, no cloud.</p>
 
       <div class="features">
-        <div class="feature"><span>🧭</span> Obveze &amp; kalendar</div>
-        <div class="feature"><span>🛒</span> Shopping lista</div>
-        <div class="feature"><span>⏳</span> Rokovi &amp; garancije</div>
-        <div class="feature"><span>💰</span> Financije</div>
-        <div class="feature"><span>❤️</span> Zdravlje</div>
-        <div class="feature"><span>📓</span> Dnevnik</div>
-        <div class="feature"><span>🛠️</span> Radni dnevnik</div>
-        <div class="feature"><span>✨</span> Pomoćnik</div>
+        <div class="feature"><span>🧭</span> Obligations &amp; calendar</div>
+        <div class="feature"><span>🛒</span> Shopping list</div>
+        <div class="feature"><span>⏳</span> Deadlines &amp; warranties</div>
+        <div class="feature"><span>💰</span> Finances</div>
+        <div class="feature"><span>❤️</span> Health</div>
+        <div class="feature"><span>📓</span> Diary</div>
+        <div class="feature"><span>🛠️</span> Work log</div>
+        <div class="feature"><span>✨</span> Assistant</div>
       </div>
     </section>
 
-    <!-- SCREENSHOTS -->
     <section id="screenshots">
-      <h2>App u praksi / App in action</h2>
-      <p class="sub">Pregled ekrana iz trenutne verzije. / Screens from the current release.</p>
+      <h2>App in action</h2>
+      <p class="sub">Screens from the current release.</p>
 
       <div class="gallery">
         <figure class="shot">
-          <img src="assets/screenshots/01-language.png" alt="Odabir jezika" loading="lazy" width="390" height="844">
-          <figcaption><strong>Jezik / Language</strong>20+ jezika</figcaption>
+          <img src="assets/screenshots/01-language.png" alt="Language selection" loading="lazy" width="390" height="844">
+          <figcaption><strong>Language</strong>20+ languages</figcaption>
         </figure>
         <figure class="shot">
-          <img src="assets/screenshots/02-home.png" alt="Početni ekran" loading="lazy" width="390" height="844">
-          <figcaption><strong>Početni ekran / Home</strong>Moduli na dlanu</figcaption>
+          <img src="assets/screenshots/02-home.png" alt="Home screen" loading="lazy" width="390" height="844">
+          <figcaption><strong>Home</strong>All modules at a glance</figcaption>
         </figure>
         <figure class="shot">
-          <img src="assets/screenshots/03-obligations-today.png" alt="Današnje obveze" loading="lazy" width="390" height="844">
-          <figcaption><strong>Obveze danas</strong>Mirna lista zadataka</figcaption>
+          <img src="assets/screenshots/03-obligations-today.png" alt="Today's obligations" loading="lazy" width="390" height="844">
+          <figcaption><strong>Today's obligations</strong>A calm task list</figcaption>
         </figure>
         <figure class="shot">
-          <img src="assets/screenshots/04-obligations-calendar.png" alt="Kalendar obveza" loading="lazy" width="390" height="844">
-          <figcaption><strong>Kalendar</strong>Rođendani &amp; obveze</figcaption>
+          <img src="assets/screenshots/04-obligations-calendar.png" alt="Obligations calendar" loading="lazy" width="390" height="844">
+          <figcaption><strong>Calendar</strong>Birthdays &amp; obligations</figcaption>
         </figure>
         <figure class="shot">
-          <img src="assets/screenshots/05-shopping.png" alt="Shopping lista" loading="lazy" width="390" height="844">
-          <figcaption><strong>Shopping</strong>Brza lista za trgovinu</figcaption>
+          <img src="assets/screenshots/05-shopping.png" alt="Shopping list" loading="lazy" width="390" height="844">
+          <figcaption><strong>Shopping</strong>Quick grocery list</figcaption>
         </figure>
         <figure class="shot">
-          <img src="assets/screenshots/06-deadlines.png" alt="Rokovi i garancije" loading="lazy" width="390" height="844">
-          <figcaption><strong>Rokovi &amp; garancije</strong>Pregled sljedećih 15 dana</figcaption>
+          <img src="assets/screenshots/06-deadlines.png" alt="Deadlines and warranties" loading="lazy" width="390" height="844">
+          <figcaption><strong>Deadlines &amp; warranties</strong>Next 15 days at a glance</figcaption>
         </figure>
         <figure class="shot">
-          <img src="assets/screenshots/07-deadlines-new.png" alt="Novi rok ili garancija" loading="lazy" width="390" height="844">
-          <figcaption><strong>Novi unos</strong>Dokument, garancija, servis</figcaption>
+          <img src="assets/screenshots/07-deadlines-new.png" alt="New deadline or warranty" loading="lazy" width="390" height="844">
+          <figcaption><strong>New entry</strong>Document, warranty, or service</figcaption>
         </figure>
         <figure class="shot">
-          <img src="assets/screenshots/08-finances.png" alt="Financije" loading="lazy" width="390" height="844">
-          <figcaption><strong>Financije</strong>Prihodi, troškovi, pregled</figcaption>
+          <img src="assets/screenshots/08-finances.png" alt="Finances" loading="lazy" width="390" height="844">
+          <figcaption><strong>Finances</strong>Income, expenses, overview</figcaption>
         </figure>
         <figure class="shot">
-          <img src="assets/screenshots/09-finances-new.png" alt="Novi financijski unos" loading="lazy" width="390" height="844">
-          <figcaption><strong>Novi unos</strong>Jednokratno ili ponavljajuće</figcaption>
+          <img src="assets/screenshots/09-finances-new.png" alt="New finance entry" loading="lazy" width="390" height="844">
+          <figcaption><strong>New entry</strong>One-time or recurring</figcaption>
         </figure>
         <figure class="shot">
-          <img src="assets/screenshots/10-health.png" alt="Zdravlje" loading="lazy" width="390" height="844">
-          <figcaption><strong>Zdravlje</strong>TL, šećer, težina, lijekovi</figcaption>
+          <img src="assets/screenshots/10-health.png" alt="Health" loading="lazy" width="390" height="844">
+          <figcaption><strong>Health</strong>BP, glucose, weight, medicine</figcaption>
         </figure>
         <figure class="shot">
-          <img src="assets/screenshots/11-diary.png" alt="Dnevnik" loading="lazy" width="390" height="844">
-          <figcaption><strong>Dnevnik</strong>Raspoloženje &amp; bilješke</figcaption>
+          <img src="assets/screenshots/11-diary.png" alt="Diary" loading="lazy" width="390" height="844">
+          <figcaption><strong>Diary</strong>Mood &amp; notes</figcaption>
         </figure>
         <figure class="shot">
-          <img src="assets/screenshots/12-worklog.png" alt="Radni dnevnik" loading="lazy" width="390" height="844">
-          <figcaption><strong>Radni dnevnik</strong>Sati rada po mjesecu</figcaption>
+          <img src="assets/screenshots/12-worklog.png" alt="Work log" loading="lazy" width="390" height="844">
+          <figcaption><strong>Work log</strong>Hours tracked by month</figcaption>
         </figure>
         <figure class="shot">
-          <img src="assets/screenshots/13-worklog-new.png" alt="Novi unos radnog dnevnika" loading="lazy" width="390" height="844">
-          <figcaption><strong>Novi unos</strong>Datum, sati, pauza</figcaption>
+          <img src="assets/screenshots/13-worklog-new.png" alt="New work log entry" loading="lazy" width="390" height="844">
+          <figcaption><strong>New entry</strong>Date, hours, break</figcaption>
         </figure>
         <figure class="shot">
-          <img src="assets/screenshots/14-assistant.png" alt="Pomoćnik" loading="lazy" width="390" height="844">
-          <figcaption><strong>Pomoćnik</strong>Što je danas važno</figcaption>
+          <img src="assets/screenshots/14-assistant.png" alt="Assistant" loading="lazy" width="390" height="844">
+          <figcaption><strong>Assistant</strong>What matters today</figcaption>
         </figure>
         <figure class="shot">
-          <img src="assets/screenshots/15-assistant-settings.png" alt="Postavke pomoćnika" loading="lazy" width="390" height="844">
-          <figcaption><strong>Postavke</strong>Jutarnji pregled &amp; moduli</figcaption>
+          <img src="assets/screenshots/15-assistant-settings.png" alt="Assistant settings" loading="lazy" width="390" height="844">
+          <figcaption><strong>Settings</strong>Morning overview &amp; modules</figcaption>
         </figure>
       </div>
     </section>
 
     <footer>
       <nav>
-        <a href="privacy.html">Pravila privatnosti / Privacy Policy</a>
-        <a href="terms.html">Uvjeti korištenja / Terms of Use</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Use</a>
       </nav>
       <p>LifeKompas — Offline. Private. Powerful.</p>
-      <p class="contact">Kontakt / Contact: <a href="mailto:lifekompas1@gmail.com">lifekompas1@gmail.com</a></p>
+      <p class="contact">Contact: <a href="mailto:lifekompas1@gmail.com">lifekompas1@gmail.com</a></p>
     </footer>
   </div>
 </body>
