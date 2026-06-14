@@ -25,10 +25,15 @@
 
     * { box-sizing: border-box; }
 
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      overflow-x: clip;
+    }
 
     body {
       margin: 0;
+      overflow-x: clip;
+      max-width: 100%;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
       color: var(--text);
       line-height: 1.55;
@@ -308,6 +313,7 @@
       margin: 0 auto;
       padding: 8px 20px 72px;
       position: relative;
+      overflow-x: clip;
     }
 
     .wrap::before {
@@ -500,18 +506,31 @@
         display: block;
       }
 
+      #modules {
+        display: none;
+      }
+
+      .gallery-scroll {
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x proximity;
+        max-width: 100%;
+        margin: 0 -4px;
+        padding: 2px 4px 14px;
+      }
+
       .gallery {
         display: flex;
         flex-wrap: nowrap;
         align-items: stretch;
         gap: 14px;
-        overflow-x: auto;
-        overscroll-behavior-x: contain;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-        padding: 2px 2px 14px;
-        margin: 0 -4px;
+        overflow: visible;
+        padding: 0;
+        margin: 0;
         justify-content: flex-start;
+        width: max-content;
+        min-width: 100%;
       }
 
       .gallery .shot {
@@ -921,7 +940,9 @@
         <p class="sub" data-i18n="screenshotsSub"></p>
       </div>
       <p class="gallery-hint" data-i18n="gallerySwipeHint"></p>
-      <div class="gallery" id="gallery"></div>
+      <div class="gallery-scroll">
+        <div class="gallery" id="gallery"></div>
+      </div>
     </section>
 
     <footer class="reveal">
