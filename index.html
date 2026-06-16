@@ -200,6 +200,18 @@
       font-weight: 600;
     }
 
+    .hero-store-soon {
+      margin: 14px 0 0;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media (min-width: 860px) {
+      .hero-store-soon { text-align: left; }
+    }
+
     .hero-guide-link {
       display: inline-flex;
       align-items: center;
@@ -882,6 +894,7 @@
           <span class="pill" data-i18n="pill"></span>
           <a href="#guide" class="hero-guide-link" data-i18n="guideJump"></a>
         </div>
+        <p class="hero-store-soon" data-i18n="storeSoon"></p>
       </div>
       <div class="hero-phone" aria-hidden="true">
         <div class="phone-shell">
@@ -1006,6 +1019,7 @@
           lightboxNext: 'Next',
           enlarge: 'Enlarge',
           tagline: 'Your personal compass for everyday life — offline, private, simple.',
+          storeSoon: 'Coming soon to the App Store and Google Play.',
           pill: 'Offline · Private · Powerful',
           videosTitle: 'Video / Demo',
           videosSub: 'Demo videos coming soon.',
@@ -1073,6 +1087,7 @@
           lightboxNext: 'Sljedeća',
           enlarge: 'Povećaj',
           tagline: 'Tvoj osobni kompas za svakodnevni život — offline, privatno, jednostavno.',
+          storeSoon: 'Uskoro na App Store i Google Play.',
           pill: 'Offline · Private · Powerful',
           videosTitle: 'Video / Demo',
           videosSub: 'Demo snimke uskoro.',
@@ -1140,6 +1155,7 @@
           lightboxNext: 'Weiter',
           enlarge: 'Vergrößern',
           tagline: 'Dein persönlicher Kompass für den Alltag — offline, privat, einfach.',
+          storeSoon: 'Demnächst im App Store und bei Google Play.',
           pill: 'Offline · Private · Powerful',
           videosTitle: 'Video / Demo',
           videosSub: 'Demo-Videos demnächst.',
