@@ -232,6 +232,10 @@
       background: rgba(61, 143, 90, 0.12);
     }
 
+    @media (max-width: 859px) {
+      .hero-guide-link { display: none; }
+    }
+
     .hero-phone {
       justify-self: center;
       width: min(100%, 260px);
@@ -941,7 +945,7 @@
         <p class="sub" data-i18n="guideSub"></p>
       </div>
       <details class="guide-details" id="guide-details">
-        <summary data-i18n="guideExpand"></summary>
+        <summary id="guide-summary"></summary>
         <div class="guide-card">
           <ul class="guide-list" id="guide-list"></ul>
           <p class="guide-footnote" id="guide-footnote"></p>
@@ -1053,6 +1057,7 @@
           ],
           guideFootnote: 'Your data stays on your device — no account, no cloud.',
           guideExpand: 'Open quick guide',
+          guideCollapse: 'Close quick guide',
           gallerySwipeHint: '← Swipe for all screens →',
           screenshotsTitle: 'App in action',
           screenshotsSub: 'Screens from the current release. Tap any screenshot to enlarge.',
@@ -1121,6 +1126,7 @@
           ],
           guideFootnote: 'Podaci ostaju na tvom uređaju — bez računa, bez oblaka.',
           guideExpand: 'Otvori kratku uputu',
+          guideCollapse: 'Zatvori kratku uputu',
           gallerySwipeHint: '← Povuci za sve ekrane →',
           screenshotsTitle: 'App u praksi',
           screenshotsSub: 'Ekrani iz trenutne verzije. Dodirni screenshot za povećanje.',
@@ -1189,6 +1195,7 @@
           ],
           guideFootnote: 'Deine Daten bleiben auf dem Gerät — kein Konto, keine Cloud.',
           guideExpand: 'Kurzanleitung öffnen',
+          guideCollapse: 'Kurzanleitung schließen',
           gallerySwipeHint: '← Swipe für alle Screens →',
           screenshotsTitle: 'App in Aktion',
           screenshotsSub: 'Screenshots der aktuellen Version. Tippe zum Vergrößern.',
@@ -1218,6 +1225,7 @@
 
       var currentLang = 'en';
       var guideDetailsEl = document.getElementById('guide-details');
+      var guideSummaryEl = document.getElementById('guide-summary');
       var galleryEl = document.getElementById('gallery');
       var guideListEl = document.getElementById('guide-list');
       var guideFootnoteEl = document.getElementById('guide-footnote');
@@ -1283,6 +1291,7 @@
         }
 
         buildGuide();
+        updateGuideSummaryLabel();
         updateHeroShot();
         syncVideoSection();
       }
@@ -1313,6 +1322,15 @@
           guideListEl.appendChild(li);
         });
         guideFootnoteEl.textContent = pack.guideFootnote || '';
+      }
+
+      function updateGuideSummaryLabel() {
+        if (!guideDetailsEl || !guideSummaryEl) return;
+        if (window.matchMedia('(min-width: 900px)').matches) return;
+        var pack = PACK[currentLang];
+        guideSummaryEl.textContent = guideDetailsEl.hasAttribute('open')
+          ? (pack.guideCollapse || 'Close quick guide')
+          : (pack.guideExpand || 'Open quick guide');
       }
 
       function clampGalleryScroll() {
@@ -1536,18 +1554,27 @@
         } else {
           guideDetailsEl.removeAttribute('open');
         }
+        updateGuideSummaryLabel();
       }
 
       function openGuideFromHash() {
         if (location.hash === '#guide' && guideDetailsEl) {
           guideDetailsEl.setAttribute('open', '');
+          updateGuideSummaryLabel();
         }
+      }
+
+      if (guideDetailsEl) {
+        guideDetailsEl.addEventListener('toggle', updateGuideSummaryLabel);
       }
 
       var heroGuideLink = document.querySelector('.hero-guide-link');
       if (heroGuideLink) {
         heroGuideLink.addEventListener('click', function () {
-          if (guideDetailsEl) guideDetailsEl.setAttribute('open', '');
+          if (guideDetailsEl) {
+            guideDetailsEl.setAttribute('open', '');
+            updateGuideSummaryLabel();
+          }
         });
       }
 
@@ -1555,6 +1582,7 @@
         if (guideDetailsEl && e.matches) {
           guideDetailsEl.setAttribute('open', '');
         }
+        updateGuideSummaryLabel();
       });
 
       function initReveal() {
