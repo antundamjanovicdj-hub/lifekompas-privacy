@@ -448,13 +448,13 @@
       font-size: 0.92rem;
     }
 
-    .guide-details summary {
-      list-style: none;
-      cursor: pointer;
+    .guide-toggle {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
+      width: 100%;
+      margin: 0;
       padding: 14px 18px;
       border-radius: var(--radius);
       border: 1px solid rgba(255, 255, 255, 0.15);
@@ -462,23 +462,27 @@
       color: var(--text);
       font-weight: 600;
       font-size: 0.95rem;
+      font-family: inherit;
+      line-height: inherit;
+      cursor: pointer;
+      text-align: left;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .guide-details summary::-webkit-details-marker { display: none; }
-
-    .guide-details summary::after {
+    .guide-toggle::after {
       content: "▾";
       color: var(--accent-light);
       font-size: 1.1rem;
       transition: transform 0.2s ease;
+      flex-shrink: 0;
     }
 
-    .guide-details[open] summary {
+    .guide-toggle.is-open {
       margin-bottom: 14px;
       border-radius: var(--radius) var(--radius) 0 0;
     }
 
-    .guide-details[open] summary::after {
+    .guide-toggle.is-open::after {
       transform: rotate(180deg);
     }
 
@@ -488,29 +492,24 @@
     }
 
     @media (max-width: 899px) {
-      .guide-details.is-mobile-collapsed .guide-card {
+      #guide.guide-section--mobile-collapsed .section-head {
+        display: none;
+      }
+
+      #guide-panel[hidden] {
         display: none !important;
-      }
-
-      .guide-details.is-mobile-collapsed summary::after {
-        transform: none;
-      }
-
-      .guide-details:not(.is-mobile-collapsed) summary {
-        margin-bottom: 14px;
-        border-radius: var(--radius) var(--radius) 0 0;
-      }
-
-      .guide-details:not(.is-mobile-collapsed) summary::after {
-        transform: rotate(180deg);
       }
     }
 
     @media (min-width: 900px) {
-      .guide-details summary { display: none !important; }
+      .guide-toggle { display: none !important; }
+
+      #guide-panel,
+      #guide-panel[hidden] {
+        display: block !important;
+      }
 
       .guide-details .guide-card {
-        display: block !important;
         border-radius: var(--radius);
       }
     }
@@ -976,18 +975,20 @@
       </div>
     </section>
 
-    <section id="guide" class="reveal">
+    <section id="guide" class="reveal guide-section--mobile-collapsed">
       <div class="section-head">
         <h2 data-i18n="guideTitle"></h2>
         <p class="sub" data-i18n="guideSub"></p>
       </div>
-      <details class="guide-details is-mobile-collapsed" id="guide-details">
-        <summary id="guide-summary">Otvori kratku uputu</summary>
-        <div class="guide-card">
-          <ul class="guide-list" id="guide-list"></ul>
-          <p class="guide-footnote" id="guide-footnote"></p>
+      <div class="guide-details" id="guide-details">
+        <button type="button" class="guide-toggle" id="guide-toggle" aria-expanded="false" aria-controls="guide-panel">Otvori kratku uputu</button>
+        <div class="guide-panel" id="guide-panel" hidden>
+          <div class="guide-card">
+            <ul class="guide-list" id="guide-list"></ul>
+            <p class="guide-footnote" id="guide-footnote"></p>
+          </div>
         </div>
-      </details>
+      </div>
     </section>
 
     <section id="screenshots">
@@ -1267,8 +1268,9 @@
       };
 
       var currentLang = 'en';
-      var guideDetailsEl = document.getElementById('guide-details');
-      var guideSummaryEl = document.getElementById('guide-summary');
+      var guideSectionEl = document.getElementById('guide');
+      var guideToggleEl = document.getElementById('guide-toggle');
+      var guidePanelEl = document.getElementById('guide-panel');
       var galleryEl = document.getElementById('gallery');
       var guideListEl = document.getElementById('guide-list');
       var guideFootnoteEl = document.getElementById('guide-footnote');
@@ -1418,13 +1420,24 @@
       }
 
       function updateGuideSummaryLabel() {
-        if (!guideDetailsEl || !guideSummaryEl) return;
+        if (!guideToggleEl) return;
         if (isDesktopGuideLayout()) return;
         var pack = PACK[currentLang];
-        var isOpen = !guideDetailsEl.classList.contains('is-mobile-collapsed');
-        guideSummaryEl.textContent = isOpen
+        var isOpen = guidePanelEl && !guidePanelEl.hidden;
+        guideToggleEl.textContent = isOpen
           ? (pack.guideCollapse || 'Close quick guide')
           : (pack.guideExpand || 'Open quick guide');
+      }
+
+      function setGuidePanelOpen(open) {
+        if (!guidePanelEl || !guideToggleEl) return;
+        guidePanelEl.hidden = !open;
+        guideToggleEl.setAttribute('aria-expanded', open ? 'true' : 'false');
+        guideToggleEl.classList.toggle('is-open', open);
+        if (guideSectionEl && !isDesktopGuideLayout()) {
+          guideSectionEl.classList.toggle('guide-section--mobile-collapsed', !open);
+        }
+        updateGuideSummaryLabel();
       }
 
       function clampGalleryScroll() {
@@ -1694,18 +1707,13 @@
       }
 
       function syncGuideDetailsState() {
-        if (!guideDetailsEl) return;
+        if (!guidePanelEl) return;
         if (isDesktopGuideLayout()) {
-          guideDetailsEl.classList.remove('is-mobile-collapsed');
-          guideDetailsEl.open = true;
-        } else if (location.hash === '#guide') {
-          guideDetailsEl.classList.remove('is-mobile-collapsed');
-          guideDetailsEl.open = true;
-        } else {
-          guideDetailsEl.classList.add('is-mobile-collapsed');
-          guideDetailsEl.open = false;
+          if (guideSectionEl) guideSectionEl.classList.remove('guide-section--mobile-collapsed');
+          setGuidePanelOpen(true);
+          return;
         }
-        updateGuideSummaryLabel();
+        setGuidePanelOpen(location.hash === '#guide');
       }
 
       function initGuideDetails() {
@@ -1716,22 +1724,16 @@
         syncGuideDetailsState();
       }
 
-      if (guideDetailsEl) {
-        guideDetailsEl.addEventListener('toggle', function () {
-          if (isDesktopGuideLayout()) return;
-          guideDetailsEl.classList.toggle('is-mobile-collapsed', !guideDetailsEl.open);
-          updateGuideSummaryLabel();
+      if (guideToggleEl) {
+        guideToggleEl.addEventListener('click', function () {
+          setGuidePanelOpen(guidePanelEl.hidden);
         });
       }
 
       var heroGuideLink = document.querySelector('.hero-guide-link');
       if (heroGuideLink) {
         heroGuideLink.addEventListener('click', function () {
-          if (guideDetailsEl) {
-            guideDetailsEl.classList.remove('is-mobile-collapsed');
-            guideDetailsEl.open = true;
-            updateGuideSummaryLabel();
-          }
+          setGuidePanelOpen(true);
         });
       }
 
