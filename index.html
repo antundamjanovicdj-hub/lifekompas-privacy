@@ -489,15 +489,15 @@
 
     @media (max-width: 899px) {
       .guide-details:not([open]) .guide-card {
-        display: none;
+        display: none !important;
       }
     }
 
     @media (min-width: 900px) {
-      .guide-details summary { display: none; }
+      .guide-details summary { display: none !important; }
 
       .guide-details .guide-card {
-        display: block;
+        display: block !important;
         border-radius: var(--radius);
       }
     }
@@ -969,7 +969,7 @@
         <p class="sub" data-i18n="guideSub"></p>
       </div>
       <details class="guide-details" id="guide-details">
-        <summary id="guide-summary"></summary>
+        <summary id="guide-summary">Otvori kratku uputu</summary>
         <div class="guide-card">
           <ul class="guide-list" id="guide-list"></ul>
           <p class="guide-footnote" id="guide-footnote"></p>
@@ -1675,22 +1675,26 @@
         if (e.key === 'ArrowRight' && !btnNext.hidden) stepLightbox(1);
       });
 
-      function initGuideDetails() {
+      function isDesktopGuideLayout() {
+        return window.matchMedia('(min-width: 900px)').matches;
+      }
+
+      function syncGuideDetailsState() {
         if (!guideDetailsEl) return;
-        if (window.matchMedia('(min-width: 900px)').matches) return;
-        guideDetailsEl.open = location.hash === '#guide';
+        if (isDesktopGuideLayout()) {
+          guideDetailsEl.open = true;
+        } else {
+          guideDetailsEl.open = location.hash === '#guide';
+        }
         updateGuideSummaryLabel();
       }
 
+      function initGuideDetails() {
+        syncGuideDetailsState();
+      }
+
       function openGuideFromHash() {
-        if (!guideDetailsEl) return;
-        if (location.hash === '#guide') {
-          guideDetailsEl.open = true;
-          updateGuideSummaryLabel();
-        } else if (!window.matchMedia('(min-width: 900px)').matches) {
-          guideDetailsEl.open = false;
-          updateGuideSummaryLabel();
-        }
+        syncGuideDetailsState();
       }
 
       if (guideDetailsEl) {
@@ -1707,12 +1711,10 @@
         });
       }
 
-      window.matchMedia('(min-width: 900px)').addEventListener('change', function () {
-        if (!guideDetailsEl) return;
-        if (!window.matchMedia('(min-width: 900px)').matches && location.hash !== '#guide') {
-          guideDetailsEl.open = false;
-        }
-        updateGuideSummaryLabel();
+      window.matchMedia('(min-width: 900px)').addEventListener('change', syncGuideDetailsState);
+      window.addEventListener('pageshow', function (e) {
+        if (e.persisted) return;
+        syncGuideDetailsState();
       });
 
       function initReveal() {
