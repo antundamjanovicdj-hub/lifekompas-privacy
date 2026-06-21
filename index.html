@@ -488,8 +488,21 @@
     }
 
     @media (max-width: 899px) {
-      .guide-details:not([open]) .guide-card {
+      .guide-details.is-mobile-collapsed .guide-card {
         display: none !important;
+      }
+
+      .guide-details.is-mobile-collapsed summary::after {
+        transform: none;
+      }
+
+      .guide-details:not(.is-mobile-collapsed) summary {
+        margin-bottom: 14px;
+        border-radius: var(--radius) var(--radius) 0 0;
+      }
+
+      .guide-details:not(.is-mobile-collapsed) summary::after {
+        transform: rotate(180deg);
       }
     }
 
@@ -968,7 +981,7 @@
         <h2 data-i18n="guideTitle"></h2>
         <p class="sub" data-i18n="guideSub"></p>
       </div>
-      <details class="guide-details" id="guide-details">
+      <details class="guide-details is-mobile-collapsed" id="guide-details">
         <summary id="guide-summary">Otvori kratku uputu</summary>
         <div class="guide-card">
           <ul class="guide-list" id="guide-list"></ul>
@@ -1406,9 +1419,10 @@
 
       function updateGuideSummaryLabel() {
         if (!guideDetailsEl || !guideSummaryEl) return;
-        if (window.matchMedia('(min-width: 900px)').matches) return;
+        if (isDesktopGuideLayout()) return;
         var pack = PACK[currentLang];
-        guideSummaryEl.textContent = guideDetailsEl.hasAttribute('open')
+        var isOpen = !guideDetailsEl.classList.contains('is-mobile-collapsed');
+        guideSummaryEl.textContent = isOpen
           ? (pack.guideCollapse || 'Close quick guide')
           : (pack.guideExpand || 'Open quick guide');
       }
@@ -1682,9 +1696,14 @@
       function syncGuideDetailsState() {
         if (!guideDetailsEl) return;
         if (isDesktopGuideLayout()) {
+          guideDetailsEl.classList.remove('is-mobile-collapsed');
+          guideDetailsEl.open = true;
+        } else if (location.hash === '#guide') {
+          guideDetailsEl.classList.remove('is-mobile-collapsed');
           guideDetailsEl.open = true;
         } else {
-          guideDetailsEl.open = location.hash === '#guide';
+          guideDetailsEl.classList.add('is-mobile-collapsed');
+          guideDetailsEl.open = false;
         }
         updateGuideSummaryLabel();
       }
@@ -1698,13 +1717,18 @@
       }
 
       if (guideDetailsEl) {
-        guideDetailsEl.addEventListener('toggle', updateGuideSummaryLabel);
+        guideDetailsEl.addEventListener('toggle', function () {
+          if (isDesktopGuideLayout()) return;
+          guideDetailsEl.classList.toggle('is-mobile-collapsed', !guideDetailsEl.open);
+          updateGuideSummaryLabel();
+        });
       }
 
       var heroGuideLink = document.querySelector('.hero-guide-link');
       if (heroGuideLink) {
         heroGuideLink.addEventListener('click', function () {
           if (guideDetailsEl) {
+            guideDetailsEl.classList.remove('is-mobile-collapsed');
             guideDetailsEl.open = true;
             updateGuideSummaryLabel();
           }
