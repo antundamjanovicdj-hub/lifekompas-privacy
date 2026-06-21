@@ -787,6 +787,22 @@
     .lightbox-prev[hidden],
     .lightbox-next[hidden] { display: none; }
 
+    @media (min-width: 900px) {
+      .lightbox-prev,
+      .lightbox-next {
+        width: 56px;
+        height: 56px;
+        font-size: 2rem;
+        background: rgba(69, 160, 104, 0.42);
+        border-color: rgba(143, 212, 168, 0.55);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      }
+
+      .lightbox-media.is-navigable {
+        cursor: pointer;
+      }
+    }
+
     .lightbox-mobile-bar {
       display: none;
       position: fixed;
@@ -1258,8 +1274,9 @@
       var lbMobileCounter = document.getElementById('lb-mobile-counter');
       var lightboxItems = [];
       var lightboxIndex = 0;
-      var lightboxTouchStartX = 0;
-      var lightboxTouchStartY = 0;
+      var lightboxDragStartX = 0;
+      var lightboxDragStartY = 0;
+      var lightboxDragActive = false;
 
       function detectLang() {
         var saved = localStorage.getItem(LANG_KEY);
@@ -1550,13 +1567,27 @@
         btnNext.hidden = !showNav;
         if (lbMobilePrev) lbMobilePrev.hidden = !showNav;
         if (lbMobileNext) lbMobileNext.hidden = !showNav;
-        if (lbMobileCounter) {
-          if (showNav) {
-            var imagePos = imageIndices.indexOf(lightboxIndex) + 1;
-            lbMobileCounter.textContent = imagePos + ' / ' + imageIndices.length;
-          } else {
-            lbMobileCounter.textContent = '';
-          }
+        media.classList.toggle('is-navigable', showNav);
+        media.onclick = null;
+        if (showNav) {
+          var imagePos = imageIndices.indexOf(lightboxIndex) + 1;
+          caption.textContent = (item.label || '') + ' · ' + imagePos + ' / ' + imageIndices.length;
+          if (lbMobileCounter) lbMobileCounter.textContent = imagePos + ' / ' + imageIndices.length;
+          media.onclick = function (e) {
+            if (e.target.closest('video, iframe')) return;
+            var rect = media.getBoundingClientRect();
+            var ratio = (e.clientX - rect.left) / rect.width;
+            if (ratio <= 0.34) {
+              e.stopPropagation();
+              stepLightbox(-1);
+            } else if (ratio >= 0.66) {
+              e.stopPropagation();
+              stepLightbox(1);
+            }
+          };
+        } else {
+          caption.textContent = item.label || '';
+          if (lbMobileCounter) lbMobileCounter.textContent = '';
         }
       }
 
@@ -1603,21 +1634,39 @@
       if (lbMobilePrev) lbMobilePrev.addEventListener('click', function () { stepLightbox(-1); });
       if (lbMobileNext) lbMobileNext.addEventListener('click', function () { stepLightbox(1); });
       lightbox.addEventListener('click', function (e) {
-        if (e.target === lightbox) closeLightbox();
+        if (e.target !== lightbox) return;
+        if (!btnPrev.hidden) {
+          var ratio = e.clientX / window.innerWidth;
+          if (ratio <= 0.22) {
+            stepLightbox(-1);
+            return;
+          }
+          if (ratio >= 0.78) {
+            stepLightbox(1);
+            return;
+          }
+        }
+        closeLightbox();
       });
-      lightbox.addEventListener('touchstart', function (e) {
-        if (lightbox.hidden || e.touches.length !== 1) return;
-        lightboxTouchStartX = e.touches[0].clientX;
-        lightboxTouchStartY = e.touches[0].clientY;
-      }, { passive: true });
-      lightbox.addEventListener('touchend', function (e) {
+      lightbox.addEventListener('pointerdown', function (e) {
         if (lightbox.hidden || btnPrev.hidden) return;
-        var t = e.changedTouches[0];
-        var dx = t.clientX - lightboxTouchStartX;
-        var dy = t.clientY - lightboxTouchStartY;
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        if (e.target.closest('button, video, iframe, .lightbox-close, .lightbox-mobile-bar')) return;
+        lightboxDragStartX = e.clientX;
+        lightboxDragStartY = e.clientY;
+        lightboxDragActive = true;
+      }, { passive: true });
+      lightbox.addEventListener('pointerup', function (e) {
+        if (!lightboxDragActive || lightbox.hidden || btnPrev.hidden) return;
+        lightboxDragActive = false;
+        var dx = e.clientX - lightboxDragStartX;
+        var dy = e.clientY - lightboxDragStartY;
         if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy)) return;
         if (dx < 0) stepLightbox(1);
         else stepLightbox(-1);
+      }, { passive: true });
+      lightbox.addEventListener('pointercancel', function () {
+        lightboxDragActive = false;
       }, { passive: true });
       document.addEventListener('keydown', function (e) {
         if (lightbox.hidden) return;
