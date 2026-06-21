@@ -995,6 +995,13 @@
       var LANG_KEY = 'lk-web-lang';
       var LANGS = ['en', 'hr', 'de'];
 
+      /** Lokalni MP4 u assets/videos/ — po jeziku; prazno = slot se ne prikazuje. */
+      var VIDEOS = {
+        en: [{ file: 'promo-en.mp4', labelKey: 'demo1Label' }],
+        hr: [{ file: 'promo-en.mp4', labelKey: 'demo1Label' }],
+        de: [{ file: 'promo-en.mp4', labelKey: 'demo1Label' }]
+      };
+
       var SHOTS = [
         { file: '01-language.png', key: 'shot01' },
         { file: '02-home.png', key: 'shot02' },
@@ -1026,9 +1033,9 @@
           storeSoon: 'Coming soon to the App Store and Google Play.',
           pill: 'Offline · Private · Powerful',
           videosTitle: 'Video / Demo',
-          videosSub: 'Demo videos coming soon.',
-          demo1Label: 'Demo 1 — coming soon',
-          demo1Hint: 'App overview',
+          videosSub: 'A short look at LifeKompas in everyday use.',
+          demo1Label: 'LifeKompas — app overview',
+          demo1Hint: 'Modules, offline use, Assistant',
           demo2Label: 'Demo 2 — coming soon',
           demo2Hint: 'Quick module tour',
           demo3Label: 'Demo 3 — coming soon',
@@ -1096,9 +1103,9 @@
           storeSoon: 'Uskoro na App Store i Google Play.',
           pill: 'Offline · Private · Powerful',
           videosTitle: 'Video / Demo',
-          videosSub: 'Demo snimke uskoro.',
-          demo1Label: 'Demo 1 — uskoro',
-          demo1Hint: 'Pregled app-a',
+          videosSub: 'Kratki pregled LifeKompassa u svakodnevnoj upotrebi.',
+          demo1Label: 'LifeKompas — pregled aplikacije',
+          demo1Hint: 'Moduli, offline, Pomoćnik',
           demo2Label: 'Demo 2 — uskoro',
           demo2Hint: 'Brzi pregled modula',
           demo3Label: 'Demo 3 — uskoro',
@@ -1166,9 +1173,9 @@
           storeSoon: 'Demnächst im App Store und bei Google Play.',
           pill: 'Offline · Private · Powerful',
           videosTitle: 'Video / Demo',
-          videosSub: 'Demo-Videos demnächst.',
-          demo1Label: 'Demo 1 — demnächst',
-          demo1Hint: 'App-Überblick',
+          videosSub: 'Ein kurzer Blick auf LifeKompas im Alltag.',
+          demo1Label: 'LifeKompas — App-Überblick',
+          demo1Hint: 'Module, offline, Assistent',
           demo2Label: 'Demo 2 — demnächst',
           demo2Hint: 'Kurzer Modul-Rundgang',
           demo3Label: 'Demo 3 — demnächst',
@@ -1296,7 +1303,7 @@
         buildGuide();
         updateGuideSummaryLabel();
         updateHeroShot();
-        syncVideoSection();
+        buildVideos();
       }
 
       function updateHeroShot() {
@@ -1311,9 +1318,58 @@
         document.querySelectorAll('.video-slot').forEach(function (slot) {
           var media = slot.querySelector('iframe, video');
           slot.classList.toggle('has-video', !!media);
+          slot.hidden = !media;
           if (media) hasContent = true;
         });
         if (videosSection) videosSection.hidden = !hasContent;
+      }
+
+      function buildVideos() {
+        var pack = PACK[currentLang];
+        var entries = VIDEOS[currentLang] || VIDEOS.en || [];
+        var slots = [
+          document.getElementById('video-slot-1'),
+          document.getElementById('video-slot-2'),
+          document.getElementById('video-slot-3')
+        ];
+
+        slots.forEach(function (slot, index) {
+          if (!slot) return;
+          slot.innerHTML = '';
+          slot.classList.remove('has-video');
+          slot.hidden = true;
+          slot.removeAttribute('role');
+          slot.removeAttribute('tabindex');
+          slot.removeAttribute('aria-label');
+          slot.onclick = null;
+          slot.onkeydown = null;
+
+          var entry = entries[index];
+          if (!entry || !entry.file) return;
+
+          var video = document.createElement('video');
+          video.controls = true;
+          video.playsInline = true;
+          video.preload = 'metadata';
+          video.setAttribute('playsinline', '');
+          video.setAttribute('webkit-playsinline', '');
+          video.setAttribute('aria-label', pack[entry.labelKey] || 'Demo video');
+
+          var source = document.createElement('source');
+          source.src = 'assets/videos/' + entry.file;
+          source.type = 'video/mp4';
+          video.appendChild(source);
+
+          var label = document.createElement('span');
+          label.className = 'placeholder-label';
+          label.hidden = true;
+          label.textContent = pack[entry.labelKey] || 'Demo video';
+          slot.appendChild(video);
+          slot.appendChild(label);
+          slot.hidden = false;
+        });
+
+        syncVideoSection();
       }
 
       function buildGuide() {
