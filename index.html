@@ -487,10 +487,17 @@
       border-top-right-radius: 0;
     }
 
+    @media (max-width: 899px) {
+      .guide-details:not([open]) .guide-card {
+        display: none;
+      }
+    }
+
     @media (min-width: 900px) {
       .guide-details summary { display: none; }
 
       .guide-details .guide-card {
+        display: block;
         border-radius: var(--radius);
       }
     }
@@ -1621,21 +1628,18 @@
 
       function initGuideDetails() {
         if (!guideDetailsEl) return;
-        if (window.matchMedia('(min-width: 900px)').matches) {
-          guideDetailsEl.setAttribute('open', '');
-          return;
-        }
-        if (location.hash === '#guide') {
-          guideDetailsEl.setAttribute('open', '');
-        } else {
-          guideDetailsEl.removeAttribute('open');
-        }
+        if (window.matchMedia('(min-width: 900px)').matches) return;
+        guideDetailsEl.open = location.hash === '#guide';
         updateGuideSummaryLabel();
       }
 
       function openGuideFromHash() {
-        if (location.hash === '#guide' && guideDetailsEl) {
-          guideDetailsEl.setAttribute('open', '');
+        if (!guideDetailsEl) return;
+        if (location.hash === '#guide') {
+          guideDetailsEl.open = true;
+          updateGuideSummaryLabel();
+        } else if (!window.matchMedia('(min-width: 900px)').matches) {
+          guideDetailsEl.open = false;
           updateGuideSummaryLabel();
         }
       }
@@ -1648,15 +1652,16 @@
       if (heroGuideLink) {
         heroGuideLink.addEventListener('click', function () {
           if (guideDetailsEl) {
-            guideDetailsEl.setAttribute('open', '');
+            guideDetailsEl.open = true;
             updateGuideSummaryLabel();
           }
         });
       }
 
-      window.matchMedia('(min-width: 900px)').addEventListener('change', function (e) {
-        if (guideDetailsEl && e.matches) {
-          guideDetailsEl.setAttribute('open', '');
+      window.matchMedia('(min-width: 900px)').addEventListener('change', function () {
+        if (!guideDetailsEl) return;
+        if (!window.matchMedia('(min-width: 900px)').matches && location.hash !== '#guide') {
+          guideDetailsEl.open = false;
         }
         updateGuideSummaryLabel();
       });
