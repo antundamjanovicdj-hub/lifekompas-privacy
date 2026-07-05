@@ -414,13 +414,15 @@
 
     .video-slot-caption {
       display: block;
-      padding: 10px 12px 12px;
-      font-size: 0.84rem;
+      padding: 12px 12px 10px;
+      font-size: 0.9rem;
       font-weight: 600;
+      line-height: 1.35;
       color: var(--text);
       text-align: center;
-      background: rgba(26, 61, 80, 0.45);
-      border-top: 1px solid var(--border);
+      background: rgba(26, 61, 80, 0.72);
+      border-bottom: 1px solid var(--border);
+      flex: 0 0 auto;
     }
 
     @media (max-width: 899px) {
@@ -1132,7 +1134,7 @@
           {
             file: 'guide-obligations-hr.mp4',
             labelKey: 'videoGuideObligations',
-            poster: 'assets/screenshots/hr/03-obligations-today.png'
+            poster: 'assets/screenshots/hr/04-obligations-calendar.png'
           },
           {
             file: 'guide-home-settings-hr.mp4',
@@ -1239,7 +1241,7 @@
           pill: 'Offline · Privatno · Moćno',
           videosTitle: 'Kratki vodiči',
           videosSub: 'Kako dodati obvezu i rođendan te pregled postavki na početnom ekranu.',
-          videoGuideObligations: 'Obveza i rođendan',
+          videoGuideObligations: 'Kako dodati obvezu i rođendan',
           videoGuideHome: 'Početni ekran i postavke',
           videoGuideAssistant: 'Postavke pomoćnika',
           videoSwipeHint: '← Povuci za vodiče →',
@@ -1507,9 +1509,9 @@
           caption.className = 'video-slot-caption';
           caption.textContent = pack[entry.labelKey] || 'Demo video';
 
+          slot.appendChild(caption);
           slot.appendChild(player);
           slot.appendChild(label);
-          slot.appendChild(caption);
           slot.hidden = false;
         });
 
