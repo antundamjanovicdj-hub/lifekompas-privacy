@@ -361,9 +361,18 @@
     }
 
     .video-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px;
+    }
+
+    .video-swipe-hint {
+      display: none;
+      margin: 0 0 14px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      text-align: center;
     }
 
     .video-slot {
@@ -376,10 +385,21 @@
     }
 
     .video-slot.has-video {
-      aspect-ratio: 331 / 720;
-      max-width: min(100%, 300px);
+      flex: 0 1 280px;
       width: 100%;
-      background: #0a1218;
+      max-width: 280px;
+      background: linear-gradient(165deg, #4a6278 0%, #334958 100%);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .video-slot-player {
+      aspect-ratio: 331 / 720;
+      width: 100%;
+      overflow: hidden;
+      flex: 0 0 auto;
     }
 
     .video-slot iframe,
@@ -389,7 +409,58 @@
       border: 0;
       display: block;
       object-fit: contain;
-      background: #000;
+      background: transparent;
+    }
+
+    .video-slot-caption {
+      display: block;
+      padding: 10px 12px 12px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--text);
+      text-align: center;
+      background: rgba(26, 61, 80, 0.45);
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 899px) {
+      .video-swipe-hint {
+        display: block;
+      }
+
+      .video-scroll {
+        overflow-x: auto;
+        overscroll-behavior-x: none;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+        max-width: 100%;
+        margin: 0;
+        padding: 2px 0 14px;
+      }
+
+      .video-grid {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 14px;
+        width: max-content;
+        padding: 0 14px;
+        padding-inline-end: max(14px, calc(100% - min(68vw, 220px)));
+      }
+
+      .video-slot.has-video {
+        flex: 0 0 min(68vw, 220px);
+        width: min(68vw, 220px);
+        max-width: none;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+      }
+
+      .video-slot.has-video video,
+      .video-slot.has-video iframe {
+        min-height: 0;
+      }
     }
 
     .features {
@@ -969,10 +1040,13 @@
         <h2 data-i18n="videosTitle"></h2>
         <p class="sub" data-i18n="videosSub"></p>
       </div>
-      <div class="video-grid">
-        <div class="video-slot" id="video-slot-1"></div>
-        <div class="video-slot" id="video-slot-2"></div>
-        <div class="video-slot" id="video-slot-3"></div>
+      <p class="video-swipe-hint" data-i18n="videoSwipeHint"></p>
+      <div class="video-scroll">
+        <div class="video-grid" id="video-grid">
+          <div class="video-slot" id="video-slot-1"></div>
+          <div class="video-slot" id="video-slot-2"></div>
+          <div class="video-slot" id="video-slot-3"></div>
+        </div>
       </div>
     </section>
 
@@ -1055,8 +1129,16 @@
       var VIDEOS = {
         en: [],
         hr: [
-          { file: 'guide-obligations-hr.mp4', labelKey: 'videoGuideObligations' },
-          { file: 'guide-home-settings-hr.mp4', labelKey: 'videoGuideHome' }
+          {
+            file: 'guide-obligations-hr.mp4',
+            labelKey: 'videoGuideObligations',
+            poster: 'assets/screenshots/hr/03-obligations-today.png'
+          },
+          {
+            file: 'guide-home-settings-hr.mp4',
+            labelKey: 'videoGuideHome',
+            poster: 'assets/screenshots/hr/02-home.png'
+          }
         ],
         de: []
       };
@@ -1092,6 +1174,7 @@
           videoGuideObligations: 'Obligation & birthday',
           videoGuideHome: 'Home screen & settings',
           videoGuideAssistant: 'Assistant settings',
+          videoSwipeHint: '← Swipe for guides →',
           modulesTitle: 'Modules',
           modulesSub: 'Everything in one place — no account, no cloud.',
           modObligations: 'Obligations & calendar',
@@ -1159,6 +1242,7 @@
           videoGuideObligations: 'Obveza i rođendan',
           videoGuideHome: 'Početni ekran i postavke',
           videoGuideAssistant: 'Postavke pomoćnika',
+          videoSwipeHint: '← Povuci za vodiče →',
           modulesTitle: 'Moduli',
           modulesSub: 'Sve na jednom mjestu — bez računa, bez oblaka.',
           modObligations: 'Obveze & kalendar',
@@ -1226,6 +1310,7 @@
           videoGuideObligations: 'Aufgabe & Geburtstag',
           videoGuideHome: 'Startbildschirm & Einstellungen',
           videoGuideAssistant: 'Assistent-Einstellungen',
+          videoSwipeHint: '← Swipe für Anleitungen →',
           modulesTitle: 'Module',
           modulesSub: 'Alles an einem Ort — kein Konto, keine Cloud.',
           modObligations: 'Aufgaben & Kalender',
@@ -1402,18 +1487,29 @@
           video.setAttribute('playsinline', '');
           video.setAttribute('webkit-playsinline', '');
           video.setAttribute('aria-label', pack[entry.labelKey] || 'Demo video');
+          if (entry.poster) video.poster = entry.poster;
 
           var source = document.createElement('source');
           source.src = 'assets/videos/' + entry.file;
           source.type = 'video/mp4';
           video.appendChild(source);
 
+          var player = document.createElement('div');
+          player.className = 'video-slot-player';
+          player.appendChild(video);
+
           var label = document.createElement('span');
           label.className = 'placeholder-label';
           label.hidden = true;
           label.textContent = pack[entry.labelKey] || 'Demo video';
-          slot.appendChild(video);
+
+          var caption = document.createElement('span');
+          caption.className = 'video-slot-caption';
+          caption.textContent = pack[entry.labelKey] || 'Demo video';
+
+          slot.appendChild(player);
           slot.appendChild(label);
+          slot.appendChild(caption);
           slot.hidden = false;
         });
 
