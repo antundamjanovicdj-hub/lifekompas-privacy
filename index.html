@@ -1155,6 +1155,11 @@
         ],
         de: [
           {
+            file: 'promo-de.web.mp4',
+            labelKey: 'videoPromo',
+            poster: 'assets/screenshots/de/02-home.png'
+          },
+          {
             file: 'guide-obligations-de.mp4',
             labelKey: 'videoGuideObligations',
             poster: 'assets/screenshots/de/04-obligations-calendar.png'
@@ -1330,7 +1335,8 @@
           storeSoon: 'Demnächst im App Store und bei Google Play.',
           pill: 'Offline · Privat · Leistungsstark',
           videosTitle: 'Kurze Anleitungen',
-          videosSub: 'Verpflichtung und Geburtstag hinzufügen sowie Einstellungen auf dem Startbildschirm.',
+          videosSub: 'Kurzvorstellung von LifeKompas sowie Anleitungen zu Aufgaben und Einstellungen.',
+          videoPromo: 'LifeKompas — Kurzvorstellung',
           videoGuideObligations: 'Verpflichtung und Geburtstag hinzufügen',
           videoGuideHome: 'Startbildschirm und Einstellungen',
           videoGuideAssistant: 'Assistent-Einstellungen',
@@ -1688,6 +1694,11 @@
         applyTexts();
         buildGallery();
         appendVideoLightboxItems();
+        if (lang === 'de' && videosSection && !videosSection.hidden) {
+          requestAnimationFrame(function () {
+            videosSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          });
+        }
       }
 
       function renderLightbox() {
