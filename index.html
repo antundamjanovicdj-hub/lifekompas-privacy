@@ -425,6 +425,65 @@
       flex: 0 0 auto;
     }
 
+    /* DE promo — zasebna sekcija iznad Anleitungen */
+    .de-promo-section {
+      margin-bottom: 8px;
+    }
+
+    .de-promo-player-wrap {
+      display: flex;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+
+    .de-promo-player {
+      width: min(100%, 340px);
+      border-radius: calc(var(--radius) + 4px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: linear-gradient(165deg, #4a6278 0%, #334958 100%);
+      box-shadow: 0 16px 42px rgba(8, 28, 42, 0.38);
+      overflow: hidden;
+      cursor: zoom-in;
+    }
+
+    .de-promo-player.has-video {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .de-promo-player video {
+      display: block;
+      width: 100%;
+      aspect-ratio: 607 / 1080;
+      object-fit: contain;
+      background: #000;
+      border: 0;
+    }
+
+    .de-promo-player-caption {
+      padding: 14px 16px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-align: center;
+      color: var(--text);
+      background: rgba(26, 61, 80, 0.82);
+      border-top: 1px solid var(--border);
+    }
+
+    .de-promo-store {
+      margin: 0;
+      text-align: center;
+      font-size: 0.92rem;
+      color: var(--accent-light);
+      font-weight: 600;
+    }
+
+    @media (min-width: 900px) {
+      .de-promo-player {
+        width: min(100%, 380px);
+      }
+    }
+
     @media (max-width: 899px) {
       .video-swipe-hint {
         display: block;
@@ -1037,6 +1096,17 @@
   </div>
 
   <div class="wrap">
+    <section id="de-promo" class="reveal de-promo-section" hidden>
+      <div class="section-head">
+        <h2 data-i18n="promoSectionTitle"></h2>
+        <p class="sub" data-i18n="promoSectionSub"></p>
+      </div>
+      <div class="de-promo-player-wrap">
+        <div class="de-promo-player" id="de-promo-slot"></div>
+      </div>
+      <p class="de-promo-store" data-i18n="storeSoon"></p>
+    </section>
+
     <section id="videos" class="reveal" hidden>
       <div class="section-head">
         <h2 data-i18n="videosTitle"></h2>
@@ -1128,6 +1198,14 @@
       var LANGS = ['en', 'hr', 'de'];
 
       /** Lokalni MP4 u assets/videos/ — po jeziku; prazno = sekcija skrivena. */
+      var PROMO_VIDEO = {
+        de: {
+          file: 'promo-de.web.mp4',
+          labelKey: 'videoPromo',
+          poster: 'assets/screenshots/de/02-home.png'
+        }
+      };
+
       var VIDEOS = {
         en: [
           {
@@ -1154,11 +1232,6 @@
           }
         ],
         de: [
-          {
-            file: 'promo-de.web.mp4',
-            labelKey: 'videoPromo',
-            poster: 'assets/screenshots/de/02-home.png'
-          },
           {
             file: 'guide-obligations-de.mp4',
             labelKey: 'videoGuideObligations',
@@ -1335,7 +1408,9 @@
           storeSoon: 'Demnächst im App Store und bei Google Play.',
           pill: 'Offline · Privat · Leistungsstark',
           videosTitle: 'Kurze Anleitungen',
-          videosSub: 'Kurzvorstellung von LifeKompas sowie Anleitungen zu Aufgaben und Einstellungen.',
+          videosSub: 'Verpflichtung und Geburtstag hinzufügen sowie Einstellungen auf dem Startbildschirm.',
+          promoSectionTitle: 'LifeKompas — Kurzvorstellung',
+          promoSectionSub: 'Offline-Organizer für Aufgaben, Finanzen, Gesundheit und mehr — in unter einer Minute.',
           videoPromo: 'LifeKompas — Kurzvorstellung',
           videoGuideObligations: 'Verpflichtung und Geburtstag hinzufügen',
           videoGuideHome: 'Startbildschirm und Einstellungen',
@@ -1402,6 +1477,8 @@
       var guideListEl = document.getElementById('guide-list');
       var guideFootnoteEl = document.getElementById('guide-footnote');
       var heroShotEl = document.getElementById('hero-shot');
+      var dePromoSection = document.getElementById('de-promo');
+      var dePromoSlot = document.getElementById('de-promo-slot');
       var videosSection = document.getElementById('videos');
       var lightbox = document.getElementById('lightbox');
       var panel = document.getElementById('lightbox-panel');
@@ -1466,7 +1543,80 @@
         buildGuide();
         updateGuideSummaryLabel();
         updateHeroShot();
+        buildDePromoSection();
         buildVideos();
+      }
+
+      function bindVideoSlotLightbox(slot, label) {
+        if (!slot) return;
+        var iframe = slot.querySelector('iframe');
+        var video = slot.querySelector('video');
+        if (!iframe && !video) return;
+        var pack = PACK[currentLang];
+        var itemIndex = lightboxItems.length;
+        var item = { type: 'video', label: label || 'Demo video' };
+        if (iframe) {
+          item.embedSrc = iframe.src;
+        } else if (video) {
+          var source = video.querySelector('source');
+          item.videoSrc = source ? source.src : video.currentSrc || video.src;
+          item.poster = video.poster || '';
+        } else {
+          return;
+        }
+        lightboxItems.push(item);
+        slot.setAttribute('role', 'button');
+        slot.setAttribute('tabindex', '0');
+        slot.setAttribute('aria-label', pack.enlarge + ': ' + (label || 'Demo video'));
+        slot.onclick = function () { openLightbox(itemIndex); };
+        slot.onkeydown = function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openLightbox(itemIndex);
+          }
+        };
+      }
+
+      function buildDePromoSection() {
+        if (!dePromoSection || !dePromoSlot) return;
+        dePromoSlot.innerHTML = '';
+        dePromoSlot.classList.remove('has-video');
+        dePromoSlot.removeAttribute('role');
+        dePromoSlot.removeAttribute('tabindex');
+        dePromoSlot.removeAttribute('aria-label');
+        dePromoSlot.onclick = null;
+        dePromoSlot.onkeydown = null;
+
+        var promo = PROMO_VIDEO[currentLang];
+        if (!promo || !promo.file) {
+          dePromoSection.hidden = true;
+          return;
+        }
+
+        var pack = PACK[currentLang];
+        dePromoSection.hidden = false;
+
+        var video = document.createElement('video');
+        video.controls = true;
+        video.playsInline = true;
+        video.preload = 'metadata';
+        video.setAttribute('playsinline', '');
+        video.setAttribute('webkit-playsinline', '');
+        video.setAttribute('aria-label', pack[promo.labelKey] || pack.videoPromo || 'Promo');
+        if (promo.poster) video.poster = promo.poster;
+
+        var source = document.createElement('source');
+        source.src = 'assets/videos/' + promo.file;
+        source.type = 'video/mp4';
+        video.appendChild(source);
+
+        var caption = document.createElement('span');
+        caption.className = 'de-promo-player-caption';
+        caption.textContent = pack[promo.labelKey] || pack.videoPromo || 'LifeKompas';
+
+        dePromoSlot.appendChild(video);
+        dePromoSlot.appendChild(caption);
+        dePromoSlot.classList.add('has-video');
       }
 
       function updateHeroShot() {
@@ -1656,35 +1806,17 @@
       }
 
       function appendVideoLightboxItems() {
-        var pack = PACK[currentLang];
         document.querySelectorAll('.video-slot.has-video').forEach(function (slot) {
-          var iframe = slot.querySelector('iframe');
-          var video = slot.querySelector('video');
-          var labelEl = slot.querySelector('.placeholder-label');
-          var label = labelEl ? labelEl.textContent : 'Demo video';
-          var itemIndex = lightboxItems.length;
-          var item = { type: 'video', label: label };
-          if (iframe) {
-            item.embedSrc = iframe.src;
-          } else if (video) {
-            var source = video.querySelector('source');
-            item.videoSrc = source ? source.src : video.currentSrc || video.src;
-            item.poster = video.poster || '';
-          } else {
-            return;
-          }
-          lightboxItems.push(item);
-          slot.setAttribute('role', 'button');
-          slot.setAttribute('tabindex', '0');
-          slot.setAttribute('aria-label', pack.enlarge + ': ' + label);
-          slot.onclick = function () { openLightbox(itemIndex); };
-          slot.onkeydown = function (e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              openLightbox(itemIndex);
-            }
-          };
+          var labelEl = slot.querySelector('.placeholder-label, .video-slot-caption');
+          bindVideoSlotLightbox(slot, labelEl ? labelEl.textContent : 'Demo video');
         });
+        if (dePromoSlot && dePromoSlot.classList.contains('has-video')) {
+          var promoLabelEl = dePromoSlot.querySelector('.de-promo-player-caption');
+          bindVideoSlotLightbox(
+            dePromoSlot,
+            promoLabelEl ? promoLabelEl.textContent : (PACK[currentLang].videoPromo || 'Promo')
+          );
+        }
       }
 
       function setLang(lang) {
@@ -1694,9 +1826,9 @@
         applyTexts();
         buildGallery();
         appendVideoLightboxItems();
-        if (lang === 'de' && videosSection && !videosSection.hidden) {
+        if (lang === 'de' && dePromoSection && !dePromoSection.hidden) {
           requestAnimationFrame(function () {
-            videosSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            dePromoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
           });
         }
       }
