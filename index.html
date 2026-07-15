@@ -1199,6 +1199,11 @@
 
       /** Lokalni MP4 u assets/videos/ — po jeziku; prazno = sekcija skrivena. */
       var PROMO_VIDEO = {
+        en: {
+          file: 'promo-en.web.mp4',
+          labelKey: 'videoPromo',
+          poster: 'assets/screenshots/en/02-home.png'
+        },
         hr: {
           file: 'promo-hr.web.mp4',
           labelKey: 'videoPromo',
@@ -1278,6 +1283,9 @@
           pill: 'Offline · Private · Powerful',
           videosTitle: 'Quick guides',
           videosSub: 'How to add an obligation and birthday, and settings on the home screen.',
+          promoSectionTitle: 'LifeKompas — quick intro',
+          promoSectionSub: 'Offline organizer for obligations, finances, health and more — in under a minute.',
+          videoPromo: 'LifeKompas — quick intro',
           videoGuideObligations: 'How to add obligation & birthday',
           videoGuideHome: 'Home screen & settings',
           videoGuideAssistant: 'Assistant settings',
@@ -1834,7 +1842,7 @@
         applyTexts();
         buildGallery();
         appendVideoLightboxItems();
-        if ((lang === 'de' || lang === 'hr') && dePromoSection && !dePromoSection.hidden) {
+        if ((lang === 'en' || lang === 'de' || lang === 'hr') && dePromoSection && !dePromoSection.hidden) {
           requestAnimationFrame(function () {
             dePromoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
           });
