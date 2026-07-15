@@ -1199,6 +1199,11 @@
 
       /** Lokalni MP4 u assets/videos/ — po jeziku; prazno = sekcija skrivena. */
       var PROMO_VIDEO = {
+        hr: {
+          file: 'promo-hr.web.mp4',
+          labelKey: 'videoPromo',
+          poster: 'assets/screenshots/hr/02-home.png'
+        },
         de: {
           file: 'promo-de.web.mp4',
           labelKey: 'videoPromo',
@@ -1341,6 +1346,9 @@
           pill: 'Offline · Privatno · Moćno',
           videosTitle: 'Kratki vodiči',
           videosSub: 'Kako dodati obvezu i rođendan te pregled postavki na početnom ekranu.',
+          promoSectionTitle: 'LifeKompas — kratka predstava',
+          promoSectionSub: 'Offline organizator za obveze, financije, zdravlje i više — u manje od minute.',
+          videoPromo: 'LifeKompas — kratka predstava',
           videoGuideObligations: 'Kako dodati obvezu i rođendan',
           videoGuideHome: 'Početni ekran i postavke',
           videoGuideAssistant: 'Postavke pomoćnika',
@@ -1826,7 +1834,7 @@
         applyTexts();
         buildGallery();
         appendVideoLightboxItems();
-        if (lang === 'de' && dePromoSection && !dePromoSection.hidden) {
+        if ((lang === 'de' || lang === 'hr') && dePromoSection && !dePromoSection.hidden) {
           requestAnimationFrame(function () {
             dePromoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
           });
