@@ -191,6 +191,7 @@
 
     .hero .pill {
       display: inline-block;
+      margin-top: 18px;
       padding: 9px 16px;
       border-radius: 999px;
       background: var(--accent-soft);
@@ -1045,6 +1046,213 @@
       .lightbox-next { right: 4px; }
     }
 
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(135deg, #45a068 0%, #2f7a4c 100%);
+      color: #f4fff8;
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 10px 24px rgba(20, 80, 45, 0.35);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+    }
+
+    .hero-cta:hover {
+      text-decoration: none;
+      filter: brightness(1.06);
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(20, 80, 45, 0.4);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    @media (min-width: 720px) {
+      .pricing-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+    }
+
+    .pricing-tier {
+      padding: 22px 22px 20px;
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(120, 180, 150, 0.05));
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .pricing-tier--premium {
+      border-color: rgba(143, 212, 168, 0.4);
+      background: linear-gradient(145deg, rgba(69, 160, 104, 0.18), rgba(255, 255, 255, 0.06));
+    }
+
+    .pricing-tier h3 {
+      margin: 0 0 6px;
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
+    }
+
+    .pricing-badge {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #b8e6c8;
+      background: var(--accent-soft);
+      border: 1px solid rgba(61, 143, 90, 0.35);
+    }
+
+    .pricing-tier p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .pricing-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+
+    .pricing-list li {
+      font-size: 0.94rem;
+      color: var(--text);
+      padding-left: 1.15em;
+      position: relative;
+    }
+
+    .pricing-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--accent-light);
+      font-weight: 700;
+    }
+
+    .pricing-prices {
+      margin: 16px 0 0;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      display: grid;
+      gap: 6px;
+      font-size: 0.92rem;
+      color: var(--text);
+    }
+
+    .pricing-prices strong {
+      color: var(--accent-light);
+      font-weight: 700;
+    }
+
+    .pricing-note {
+      margin: 16px 0 0;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .offline-punch {
+      margin-top: 56px;
+      padding: 28px 24px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(143, 212, 168, 0.28);
+      background:
+        radial-gradient(ellipse 80% 120% at 10% 0%, rgba(69, 160, 104, 0.22), transparent 55%),
+        linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(120, 180, 150, 0.04));
+      text-align: center;
+    }
+
+    .offline-punch h2 {
+      margin: 0 0 10px;
+      font-size: clamp(1.25rem, 3vw, 1.55rem);
+      letter-spacing: -0.02em;
+      color: #f8fbfe;
+    }
+
+    .offline-punch p {
+      margin: 0 auto;
+      max-width: 36rem;
+      font-size: 1.05rem;
+      line-height: 1.5;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .notify-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: stretch;
+      max-width: 520px;
+    }
+
+    .notify-form input[type="email"] {
+      flex: 1 1 220px;
+      min-width: 0;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+
+    .notify-form input[type="email"]::placeholder {
+      color: rgba(184, 201, 216, 0.75);
+    }
+
+    .notify-form button {
+      flex: 0 0 auto;
+      padding: 12px 18px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(135deg, #45a068 0%, #2f7a4c 100%);
+      color: #f4fff8;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .notify-form button:hover { filter: brightness(1.06); }
+
+    .notify-hint {
+      margin: 12px 0 0;
+      font-size: 0.88rem;
+      color: var(--muted);
+      max-width: 36rem;
+    }
+
+    .notify-status {
+      margin: 10px 0 0;
+      font-size: 0.9rem;
+      color: var(--accent-light);
+      font-weight: 600;
+      min-height: 1.2em;
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .hero-copy,
@@ -1081,9 +1289,10 @@
         <h1>LifeKompas</h1>
         <p class="tagline" data-i18n="tagline"></p>
         <div class="hero-actions">
-          <span class="pill" data-i18n="pill"></span>
+          <a href="#notify" class="hero-cta" data-i18n="heroCta"></a>
           <a href="#guide" class="hero-guide-link" data-i18n="guideJump"></a>
         </div>
+        <span class="pill" data-i18n="pill"></span>
         <p class="hero-store-soon" data-i18n="storeSoon"></p>
       </div>
       <div class="hero-phone" aria-hidden="true">
@@ -1137,6 +1346,59 @@
         <div class="feature"><span class="feature-icon">🛠️</span><span data-i18n="modWorklog"></span></div>
         <div class="feature"><span class="feature-icon">✨</span><span data-i18n="modAssistant"></span></div>
       </div>
+    </section>
+
+    <section id="offline" class="reveal offline-punch">
+      <h2 data-i18n="offlineTitle"></h2>
+      <p data-i18n="offlineBody"></p>
+    </section>
+
+    <section id="pricing" class="reveal">
+      <div class="section-head">
+        <h2 data-i18n="pricingTitle"></h2>
+        <p class="sub" data-i18n="pricingSub"></p>
+      </div>
+      <div class="pricing-grid">
+        <div class="pricing-tier">
+          <span class="pricing-badge" data-i18n="pricingFreeBadge"></span>
+          <h3 data-i18n="pricingFreeTitle"></h3>
+          <p data-i18n="pricingFreeBody"></p>
+          <ul class="pricing-list">
+            <li data-i18n="pricingFreeItem1"></li>
+            <li data-i18n="pricingFreeItem2"></li>
+          </ul>
+        </div>
+        <div class="pricing-tier pricing-tier--premium">
+          <span class="pricing-badge" data-i18n="pricingPremiumBadge"></span>
+          <h3 data-i18n="pricingPremiumTitle"></h3>
+          <p data-i18n="pricingPremiumBody"></p>
+          <ul class="pricing-list">
+            <li data-i18n="pricingPremiumItem1"></li>
+            <li data-i18n="pricingPremiumItem2"></li>
+            <li data-i18n="pricingPremiumItem3"></li>
+          </ul>
+          <div class="pricing-prices">
+            <div><strong data-i18n="priceMonthly"></strong> <span data-i18n="priceMonthlyLabel"></span></div>
+            <div><strong data-i18n="priceYearly"></strong> <span data-i18n="priceYearlyLabel"></span></div>
+            <div><strong data-i18n="priceLifetime"></strong> <span data-i18n="priceLifetimeLabel"></span></div>
+          </div>
+        </div>
+      </div>
+      <p class="pricing-note" data-i18n="pricingNote"></p>
+    </section>
+
+    <section id="notify" class="reveal">
+      <div class="section-head">
+        <h2 data-i18n="notifyTitle"></h2>
+        <p class="sub" data-i18n="notifySub"></p>
+      </div>
+      <form class="notify-form" id="waitlist-form" novalidate>
+        <label class="visually-hidden" for="waitlist-email" data-i18n="notifyEmailLabel"></label>
+        <input type="email" id="waitlist-email" name="email" autocomplete="email" required data-i18n-placeholder="notifyEmailPlaceholder">
+        <button type="submit" data-i18n="notifySubmit"></button>
+      </form>
+      <p class="notify-hint" data-i18n="notifyHint"></p>
+      <p class="notify-status" id="waitlist-status" aria-live="polite"></p>
     </section>
 
     <section id="guide" class="reveal guide-section--mobile-collapsed">
@@ -1300,6 +1562,38 @@
           modDiary: 'Diary',
           modWorklog: 'Work log',
           modAssistant: 'Assistant',
+          heroCta: 'Notify me when it launches',
+          offlineTitle: 'Your phone. Your data.',
+          offlineBody: 'LifeKompas works offline. Notes stay on your device — no account, no cloud for your everyday life.',
+          pricingTitle: 'Free to start. Premium when you need more.',
+          pricingSub: 'Download the app for free. Unlock the rest of the modules when you are ready.',
+          pricingFreeBadge: 'Free',
+          pricingFreeTitle: 'Obligations',
+          pricingFreeBody: 'Start organizing today — no payment required.',
+          pricingFreeItem1: 'Obligations & calendar',
+          pricingFreeItem2: 'Reminders on your device',
+          pricingPremiumBadge: 'Premium',
+          pricingPremiumTitle: 'All modules',
+          pricingPremiumBody: 'Shopping, deadlines, finances, health, diary, work log, full Assistant, and more.',
+          pricingPremiumItem1: 'Every module unlocked for editing',
+          pricingPremiumItem2: 'Full Assistant options',
+          pricingPremiumItem3: 'One purchase — monthly, yearly, or lifetime',
+          priceMonthly: '2,99 €',
+          priceMonthlyLabel: '/ month',
+          priceYearly: '24,99 €',
+          priceYearlyLabel: '/ year',
+          priceLifetime: '39,99 €',
+          priceLifetimeLabel: 'lifetime (one-time)',
+          pricingNote: 'Prices shown in euros; your store may display local tax. Available in the app after launch.',
+          notifyTitle: 'Get notified',
+          notifySub: 'Leave your email — we will tell you when LifeKompas is on the App Store and Google Play.',
+          notifyEmailLabel: 'Email',
+          notifyEmailPlaceholder: 'you@email.com',
+          notifySubmit: 'Notify me',
+          notifyHint: 'Opens your email app with a short message to us. We only use it to announce the store launch.',
+          notifyStatusOk: 'Your email app should open now. Send the message to join the list.',
+          waitlistMailSubject: 'LifeKompas — notify me at launch',
+          waitlistMailBody: 'Please notify me when LifeKompas is available on the App Store and Google Play.\n\nMy email:',
           guideJump: 'Quick guide ↓',
           guideTitle: 'Quick guide',
           guideSub: 'How to get started with LifeKompas.',
@@ -1371,6 +1665,38 @@
           modDiary: 'Dnevnik',
           modWorklog: 'Radni dnevnik',
           modAssistant: 'Pomoćnik',
+          heroCta: 'Obavijesti me kad izađe',
+          offlineTitle: 'Tvoj telefon. Tvoji podaci.',
+          offlineBody: 'LifeKompas radi offline. Bilješke ostaju na uređaju — bez računa, bez oblaka za svakodnevni život.',
+          pricingTitle: 'Besplatno za početak. Premium kad zatreba.',
+          pricingSub: 'App je besplatna za skinuti. Ostale module otključaj kad budeš spreman.',
+          pricingFreeBadge: 'Besplatno',
+          pricingFreeTitle: 'Obveze',
+          pricingFreeBody: 'Organiziraj odmah — bez plaćanja.',
+          pricingFreeItem1: 'Obveze i kalendar',
+          pricingFreeItem2: 'Podsjetnici na uređaju',
+          pricingPremiumBadge: 'Premium',
+          pricingPremiumTitle: 'Svi moduli',
+          pricingPremiumBody: 'Kupovina, rokovi, financije, zdravlje, dnevnik, radni dnevnik, puni Pomoćnik i više.',
+          pricingPremiumItem1: 'Svi moduli otključani za uređivanje',
+          pricingPremiumItem2: 'Puni Pomoćnik',
+          pricingPremiumItem3: 'Jedna kupnja — mjesečno, godišnje ili doživotno',
+          priceMonthly: '2,99 €',
+          priceMonthlyLabel: '/ mjesečno',
+          priceYearly: '24,99 €',
+          priceYearlyLabel: '/ godišnje',
+          priceLifetime: '39,99 €',
+          priceLifetimeLabel: 'doživotno (jednokratno)',
+          pricingNote: 'Cijene u eurima; store može prikazati PDV. Dostupno u appu nakon objave.',
+          notifyTitle: 'Obavijesti me',
+          notifySub: 'Ostavi e-mail — javit ćemo ti kad LifeKompas bude na App Storeu i Google Playu.',
+          notifyEmailLabel: 'E-mail',
+          notifyEmailPlaceholder: 'ti@email.com',
+          notifySubmit: 'Obavijesti me',
+          notifyHint: 'Otvara tvoj mail program s kratkom porukom nama. Koristimo ga samo za najavu objave u storeu.',
+          notifyStatusOk: 'Mail program bi se trebao otvoriti. Pošalji poruku da uđeš na listu.',
+          waitlistMailSubject: 'LifeKompas — obavijest pri objavi',
+          waitlistMailBody: 'Molim obavijest kad LifeKompas bude na App Storeu i Google Playu.\n\nMoj e-mail:',
           guideJump: 'Kratka uputa ↓',
           guideTitle: 'Kratka uputa',
           guideSub: 'Kako početi koristiti LifeKompas.',
@@ -1442,6 +1768,38 @@
           modDiary: 'Tagebuch',
           modWorklog: 'Arbeitsprotokoll',
           modAssistant: 'Assistent',
+          heroCta: 'Benachrichtige mich zum Launch',
+          offlineTitle: 'Dein Telefon. Deine Daten.',
+          offlineBody: 'LifeKompas funktioniert offline. Notizen bleiben auf dem Gerät — kein Konto, keine Cloud für den Alltag.',
+          pricingTitle: 'Kostenlos starten. Premium wenn du mehr brauchst.',
+          pricingSub: 'App kostenlos laden. Weitere Module freischalten, wenn du soweit bist.',
+          pricingFreeBadge: 'Kostenlos',
+          pricingFreeTitle: 'Aufgaben',
+          pricingFreeBody: 'Sofort organisieren — ohne Zahlung.',
+          pricingFreeItem1: 'Aufgaben & Kalender',
+          pricingFreeItem2: 'Erinnerungen auf dem Gerät',
+          pricingPremiumBadge: 'Premium',
+          pricingPremiumTitle: 'Alle Module',
+          pricingPremiumBody: 'Einkauf, Fristen, Finanzen, Gesundheit, Tagebuch, Arbeitsprotokoll, voller Assistent und mehr.',
+          pricingPremiumItem1: 'Alle Module zum Bearbeiten freigeschaltet',
+          pricingPremiumItem2: 'Voller Assistent',
+          pricingPremiumItem3: 'Ein Kauf — monatlich, jährlich oder lebenslang',
+          priceMonthly: '2,99 €',
+          priceMonthlyLabel: '/ Monat',
+          priceYearly: '24,99 €',
+          priceYearlyLabel: '/ Jahr',
+          priceLifetime: '39,99 €',
+          priceLifetimeLabel: 'lebenslang (einmalig)',
+          pricingNote: 'Preise in Euro; der Store kann MwSt. anzeigen. Nach dem Launch in der App verfügbar.',
+          notifyTitle: 'Benachrichtigung',
+          notifySub: 'E-Mail hinterlassen — wir melden uns, wenn LifeKompas im App Store und bei Google Play ist.',
+          notifyEmailLabel: 'E-Mail',
+          notifyEmailPlaceholder: 'du@email.com',
+          notifySubmit: 'Benachrichtige mich',
+          notifyHint: 'Öffnet dein E-Mail-Programm mit einer kurzen Nachricht an uns. Nur für die Store-Ankündigung.',
+          notifyStatusOk: 'Dein E-Mail-Programm sollte sich öffnen. Nachricht senden, um auf die Liste zu kommen.',
+          waitlistMailSubject: 'LifeKompas — Benachrichtigung zum Launch',
+          waitlistMailBody: 'Bitte benachrichtigen, wenn LifeKompas im App Store und bei Google Play verfügbar ist.\n\nMeine E-Mail:',
           guideJump: 'Kurzanleitung ↓',
           guideTitle: 'Kurzanleitung',
           guideSub: 'So startest du mit LifeKompas.',
@@ -1540,6 +1898,11 @@
           if (pack[key] != null) el.textContent = pack[key];
         });
 
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
+          var key = el.getAttribute('data-i18n-placeholder');
+          if (pack[key] != null) el.setAttribute('placeholder', pack[key]);
+        });
+
         document.querySelectorAll('[data-i18n-aria]').forEach(function (el) {
           var key = el.getAttribute('data-i18n-aria');
           if (pack[key] != null) el.setAttribute('aria-label', pack[key]);
@@ -1551,6 +1914,25 @@
         document.querySelectorAll('.lang-picker button').forEach(function (btn) {
           btn.classList.toggle('is-active', btn.getAttribute('data-lang') === currentLang);
         });
+
+      var waitlistForm = document.getElementById('waitlist-form');
+      var waitlistEmail = document.getElementById('waitlist-email');
+      var waitlistStatus = document.getElementById('waitlist-status');
+      if (waitlistForm && waitlistEmail) {
+        waitlistForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+          var email = String(waitlistEmail.value || '').trim();
+          if (!email || (waitlistEmail.validity && !waitlistEmail.validity.valid)) {
+            waitlistEmail.focus();
+            return;
+          }
+          var subject = encodeURIComponent(t('waitlistMailSubject'));
+          var body = encodeURIComponent(t('waitlistMailBody') + '\n' + email);
+          if (waitlistStatus) waitlistStatus.textContent = t('notifyStatusOk');
+          window.location.href = 'mailto:lifekompas1@gmail.com?subject=' + subject + '&body=' + body;
+        });
+      }
+
 
         if (lbMobileClose && pack.lightboxCloseLabel) {
           lbMobileClose.textContent = pack.lightboxCloseLabel;
