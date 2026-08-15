@@ -1226,6 +1226,14 @@
 
     .notify-form button:hover { filter: brightness(1.06); }
 
+    .notify-simple {
+      margin: 0 0 8px;
+    }
+
+    .notify-simple .hero-cta {
+      display: inline-flex;
+    }
+
     .notify-hint {
       margin: 12px 0 0;
       font-size: 0.88rem;
@@ -1392,13 +1400,10 @@
         <h2 data-i18n="notifyTitle"></h2>
         <p class="sub" data-i18n="notifySub"></p>
       </div>
-      <form class="notify-form" id="waitlist-form" novalidate>
-        <label class="visually-hidden" for="waitlist-email" data-i18n="notifyEmailLabel"></label>
-        <input type="email" id="waitlist-email" name="email" autocomplete="email" required data-i18n-placeholder="notifyEmailPlaceholder">
-        <button type="submit" data-i18n="notifySubmit"></button>
-      </form>
+      <p class="notify-simple">
+        <a class="hero-cta" id="notify-mail-link" href="mailto:lifekompas1@gmail.com?subject=LifeKompas%20launch%20notify">lifekompas1@gmail.com</a>
+      </p>
       <p class="notify-hint" data-i18n="notifyHint"></p>
-      <p class="notify-status" id="waitlist-status" aria-live="polite"></p>
     </section>
 
     <section id="guide" class="reveal guide-section--mobile-collapsed">
@@ -1586,14 +1591,9 @@
           priceLifetimeLabel: 'lifetime (one-time)',
           pricingNote: 'Prices shown in euros; your store may display local tax. Available in the app after launch.',
           notifyTitle: 'Get notified',
-          notifySub: 'Leave your email — we will tell you when LifeKompas is on the App Store and Google Play.',
-          notifyEmailLabel: 'Email',
-          notifyEmailPlaceholder: 'you@email.com',
-          notifySubmit: 'Notify me',
-          notifyHint: 'Opens your email app with a short message to us. We only use it to announce the store launch.',
-          notifyStatusOk: 'Your email app should open now. Send the message to join the list.',
-          waitlistMailSubject: 'LifeKompas — notify me at launch',
-          waitlistMailBody: 'Please notify me when LifeKompas is available on the App Store and Google Play.\n\nMy email:',
+          notifySub: 'Send a short email — we will reply when LifeKompas is on the App Store and Google Play.',
+          notifyHint: 'Tap the address above. Only used to tell you when the app launches.',
+          notifyMailSubject: 'LifeKompas — notify me at launch',
           guideJump: 'Quick guide ↓',
           guideTitle: 'Quick guide',
           guideSub: 'How to get started with LifeKompas.',
@@ -1689,14 +1689,9 @@
           priceLifetimeLabel: 'doživotno (jednokratno)',
           pricingNote: 'Cijene u eurima; store može prikazati PDV. Dostupno u appu nakon objave.',
           notifyTitle: 'Obavijesti me',
-          notifySub: 'Ostavi e-mail — javit ćemo ti kad LifeKompas bude na App Storeu i Google Playu.',
-          notifyEmailLabel: 'E-mail',
-          notifyEmailPlaceholder: 'ti@email.com',
-          notifySubmit: 'Obavijesti me',
-          notifyHint: 'Otvara tvoj mail program s kratkom porukom nama. Koristimo ga samo za najavu objave u storeu.',
-          notifyStatusOk: 'Mail program bi se trebao otvoriti. Pošalji poruku da uđeš na listu.',
-          waitlistMailSubject: 'LifeKompas — obavijest pri objavi',
-          waitlistMailBody: 'Molim obavijest kad LifeKompas bude na App Storeu i Google Playu.\n\nMoj e-mail:',
+          notifySub: 'Pošalji kratki mail — javit ćemo ti kad LifeKompas bude na App Storeu i Google Playu.',
+          notifyHint: 'Dodirni adresu iznad. Koristimo je samo da ti javimo kad app izađe.',
+          notifyMailSubject: 'LifeKompas — obavijest pri objavi',
           guideJump: 'Kratka uputa ↓',
           guideTitle: 'Kratka uputa',
           guideSub: 'Kako početi koristiti LifeKompas.',
@@ -1792,14 +1787,9 @@
           priceLifetimeLabel: 'lebenslang (einmalig)',
           pricingNote: 'Preise in Euro; der Store kann MwSt. anzeigen. Nach dem Launch in der App verfügbar.',
           notifyTitle: 'Benachrichtigung',
-          notifySub: 'E-Mail hinterlassen — wir melden uns, wenn LifeKompas im App Store und bei Google Play ist.',
-          notifyEmailLabel: 'E-Mail',
-          notifyEmailPlaceholder: 'du@email.com',
-          notifySubmit: 'Benachrichtige mich',
-          notifyHint: 'Öffnet dein E-Mail-Programm mit einer kurzen Nachricht an uns. Nur für die Store-Ankündigung.',
-          notifyStatusOk: 'Dein E-Mail-Programm sollte sich öffnen. Nachricht senden, um auf die Liste zu kommen.',
-          waitlistMailSubject: 'LifeKompas — Benachrichtigung zum Launch',
-          waitlistMailBody: 'Bitte benachrichtigen, wenn LifeKompas im App Store und bei Google Play verfügbar ist.\n\nMeine E-Mail:',
+          notifySub: 'Kurze E-Mail senden — wir melden uns, wenn LifeKompas im App Store und bei Google Play ist.',
+          notifyHint: 'Tippe die Adresse oben. Nur für die Launch-Benachrichtigung.',
+          notifyMailSubject: 'LifeKompas — Benachrichtigung zum Launch',
           guideJump: 'Kurzanleitung ↓',
           guideTitle: 'Kurzanleitung',
           guideSub: 'So startest du mit LifeKompas.',
@@ -1908,6 +1898,12 @@
           if (pack[key] != null) el.setAttribute('aria-label', pack[key]);
         });
 
+
+        var notifyLink = document.getElementById('notify-mail-link');
+        if (notifyLink && pack.notifyMailSubject) {
+          notifyLink.href = 'mailto:lifekompas1@gmail.com?subject=' + encodeURIComponent(pack.notifyMailSubject);
+        }
+
         document.getElementById('link-privacy').href = pack.privacyHref;
         document.getElementById('link-terms').href = pack.termsHref;
 
@@ -1915,23 +1911,6 @@
           btn.classList.toggle('is-active', btn.getAttribute('data-lang') === currentLang);
         });
 
-      var waitlistForm = document.getElementById('waitlist-form');
-      var waitlistEmail = document.getElementById('waitlist-email');
-      var waitlistStatus = document.getElementById('waitlist-status');
-      if (waitlistForm && waitlistEmail) {
-        waitlistForm.addEventListener('submit', function (e) {
-          e.preventDefault();
-          var email = String(waitlistEmail.value || '').trim();
-          if (!email || (waitlistEmail.validity && !waitlistEmail.validity.valid)) {
-            waitlistEmail.focus();
-            return;
-          }
-          var subject = encodeURIComponent(t('waitlistMailSubject'));
-          var body = encodeURIComponent(t('waitlistMailBody') + '\n' + email);
-          if (waitlistStatus) waitlistStatus.textContent = t('notifyStatusOk');
-          window.location.href = 'mailto:lifekompas1@gmail.com?subject=' + subject + '&body=' + body;
-        });
-      }
 
 
         if (lbMobileClose && pack.lightboxCloseLabel) {
