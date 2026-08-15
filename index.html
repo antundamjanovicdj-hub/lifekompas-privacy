@@ -2203,11 +2203,7 @@
         applyTexts();
         buildGallery();
         appendVideoLightboxItems();
-        if ((lang === 'en' || lang === 'de' || lang === 'hr') && dePromoSection && !dePromoSection.hidden) {
-          requestAnimationFrame(function () {
-            dePromoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          });
-        }
+        // Ne skrolaj na promo — hero mora ostati prvi dojam pri otvaranju / promjeni jezika.
       }
 
       function renderLightbox() {
