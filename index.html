@@ -1924,6 +1924,15 @@
         buildVideos();
       }
 
+      function pausePageVideos() {
+        document.querySelectorAll('video').forEach(function (v) {
+          if (lightbox && lightbox.contains(v)) return;
+          try {
+            v.pause();
+          } catch (err) { /* ignore */ }
+        });
+      }
+
       function bindVideoSlotLightbox(slot, label) {
         if (!slot) return;
         var iframe = slot.querySelector('iframe');
@@ -1945,13 +1954,32 @@
         slot.setAttribute('role', 'button');
         slot.setAttribute('tabindex', '0');
         slot.setAttribute('aria-label', pack.enlarge + ': ' + (label || 'Demo video'));
-        slot.onclick = function () { openLightbox(itemIndex); };
+
+        function openFromSlot(e) {
+          if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+          pausePageVideos();
+          openLightbox(itemIndex);
+        }
+
+        slot.onclick = openFromSlot;
         slot.onkeydown = function (e) {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
-            openLightbox(itemIndex);
+            openFromSlot(e);
           }
         };
+        // Klik na video (poster/play) ne smije pustiti zvuk na stranici + u lightboxu.
+        if (video) {
+          video.addEventListener('click', openFromSlot, true);
+          video.addEventListener('play', function () {
+            if (lightbox && !lightbox.hidden) {
+              try { video.pause(); } catch (err) { /* ignore */ }
+            }
+          });
+        }
       }
 
       function buildDePromoSection() {
@@ -2268,15 +2296,21 @@
 
       function openLightbox(i) {
         if (!lightboxItems.length) return;
+        pausePageVideos();
         lightboxIndex = i;
         renderLightbox();
         lightbox.hidden = false;
         lightbox.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
         btnClose.focus();
+        // Još jednom nakon rendera — native play s istog klika može kasniti.
+        requestAnimationFrame(pausePageVideos);
+        setTimeout(pausePageVideos, 0);
+        setTimeout(pausePageVideos, 100);
       }
 
       function closeLightbox() {
+        pausePageVideos();
         lightbox.hidden = true;
         lightbox.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
