@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="LifeKompas — offline personal organizer: obligations, shopping, finances, health, diary and more.">
+  <meta name="description" content="LifeKompas — offline personal organizer: obligations, shopping, finances, health, notes and more.">
   <link rel="sitemap" type="application/xml" href="/sitemap.xml">
   <title>LifeKompas</title>
   <style>
@@ -1349,7 +1349,7 @@
         <div class="feature"><span class="feature-icon">⏳</span><span data-i18n="modDeadlines"></span></div>
         <div class="feature"><span class="feature-icon">💰</span><span data-i18n="modFinances"></span></div>
         <div class="feature"><span class="feature-icon">❤️</span><span data-i18n="modHealth"></span></div>
-        <div class="feature"><span class="feature-icon">📓</span><span data-i18n="modDiary"></span></div>
+        <div class="feature"><span class="feature-icon">📝</span><span data-i18n="modNotes"></span></div>
         <div class="feature"><span class="feature-icon">🛠️</span><span data-i18n="modWorklog"></span></div>
         <div class="feature"><span class="feature-icon">✨</span><span data-i18n="modAssistant"></span></div>
       </div>
@@ -1530,14 +1530,14 @@
         { file: '06-deadlines.png', key: 'shot06' },
         { file: '08-finances.png', key: 'shot08' },
         { file: '10-health.png', key: 'shot10' },
-        { file: '11-diary.png', key: 'shot11' },
+        { file: '11-notes.png', key: 'shot11' },
         { file: '12-worklog.png', key: 'shot12' },
         { file: '14-assistant.png', key: 'shot14' }
       ];
 
       var PACK = {
         en: {
-          metaDescription: 'LifeKompas — offline personal organizer: obligations, shopping, finances, health, diary and more.',
+          metaDescription: 'LifeKompas — offline personal organizer: obligations, shopping, finances, health, notes and more.',
           lightboxDialog: 'Enlarged view',
           lightboxClose: 'Close',
           lightboxCloseLabel: 'Close',
@@ -1563,7 +1563,7 @@
           modDeadlines: 'Deadlines & warranties',
           modFinances: 'Finances',
           modHealth: 'Health',
-          modDiary: 'Diary',
+          modNotes: 'Notes',
           modWorklog: 'Work log',
           modAssistant: 'Assistant',
           heroCta: 'Notify me when it launches',
@@ -1578,7 +1578,7 @@
           pricingFreeItem2: 'Reminders on your device',
           pricingPremiumBadge: 'Premium',
           pricingPremiumTitle: 'All modules',
-          pricingPremiumBody: 'Shopping, deadlines, finances, health, diary, work log, full Assistant, and more.',
+          pricingPremiumBody: 'Shopping, deadlines, finances, health, notes, work log, full Assistant, and more.',
           pricingPremiumItem1: 'Every module unlocked for editing',
           pricingPremiumItem2: 'Full Assistant options',
           pricingPremiumItem3: 'One purchase — monthly, yearly, or lifetime',
@@ -1628,14 +1628,14 @@
           shot08: { title: 'Finances', desc: 'Income, expenses, overview', alt: 'Finances' },
           shot09: { title: 'New entry', desc: 'One-time or recurring', alt: 'New finance entry' },
           shot10: { title: 'Health', desc: 'BP, glucose, weight, medicine', alt: 'Health' },
-          shot11: { title: 'Diary', desc: 'Mood & notes', alt: 'Diary' },
+          shot11: { title: 'Notes', desc: 'Text & optional photo', alt: 'Notes' },
           shot12: { title: 'Work log', desc: 'Hours tracked by month', alt: 'Work log' },
           shot13: { title: 'New entry', desc: 'Date, hours, break', alt: 'New work log entry' },
           shot14: { title: 'Assistant', desc: 'What matters today', alt: 'Assistant' },
           shot15: { title: 'Settings', desc: 'Morning overview & modules', alt: 'Assistant settings' }
         },
         hr: {
-          metaDescription: 'LifeKompas — offline organizator: obveze, kupovina, financije, zdravlje, dnevnik i više.',
+          metaDescription: 'LifeKompas — offline organizator: obveze, kupovina, financije, zdravlje, bilješke i više.',
           lightboxDialog: 'Povećani prikaz',
           lightboxClose: 'Zatvori',
           lightboxCloseLabel: 'Zatvori',
@@ -1661,7 +1661,7 @@
           modDeadlines: 'Rokovi & garancije',
           modFinances: 'Financije',
           modHealth: 'Zdravlje',
-          modDiary: 'Dnevnik',
+          modNotes: 'Bilješke',
           modWorklog: 'Radni dnevnik',
           modAssistant: 'Pomoćnik',
           heroCta: 'Obavijesti me kad izađe',
@@ -1676,7 +1676,7 @@
           pricingFreeItem2: 'Podsjetnici na uređaju',
           pricingPremiumBadge: 'Premium',
           pricingPremiumTitle: 'Svi moduli',
-          pricingPremiumBody: 'Kupovina, rokovi, financije, zdravlje, dnevnik, radni dnevnik, puni Pomoćnik i više.',
+          pricingPremiumBody: 'Kupovina, rokovi, financije, zdravlje, bilješke, radni dnevnik, puni Pomoćnik i više.',
           pricingPremiumItem1: 'Svi moduli otključani za uređivanje',
           pricingPremiumItem2: 'Puni Pomoćnik',
           pricingPremiumItem3: 'Jedna kupnja — mjesečno, godišnje ili doživotno',
@@ -1726,14 +1726,14 @@
           shot08: { title: 'Financije', desc: 'Prihodi, troškovi, pregled', alt: 'Financije' },
           shot09: { title: 'Novi unos', desc: 'Jednokratno ili ponavljajuće', alt: 'Novi financijski unos' },
           shot10: { title: 'Zdravlje', desc: 'TL, šećer, težina, lijekovi', alt: 'Zdravlje' },
-          shot11: { title: 'Dnevnik', desc: 'Raspoloženje & bilješke', alt: 'Dnevnik' },
+          shot11: { title: 'Bilješke', desc: 'Tekst i opcionalna slika', alt: 'Bilješke' },
           shot12: { title: 'Radni dnevnik', desc: 'Sati rada po mjesecu', alt: 'Radni dnevnik' },
           shot13: { title: 'Novi unos', desc: 'Datum, sati, pauza', alt: 'Novi unos radnog dnevnika' },
           shot14: { title: 'Pomoćnik', desc: 'Što je danas važno', alt: 'Pomoćnik' },
           shot15: { title: 'Postavke', desc: 'Jutarnji pregled & moduli', alt: 'Postavke pomoćnika' }
         },
         de: {
-          metaDescription: 'LifeKompas — offline Organizer: Aufgaben, Einkauf, Finanzen, Gesundheit, Tagebuch und mehr.',
+          metaDescription: 'LifeKompas — offline Organizer: Aufgaben, Einkauf, Finanzen, Gesundheit, Notizen und mehr.',
           lightboxDialog: 'Vergrößerte Ansicht',
           lightboxClose: 'Schließen',
           lightboxCloseLabel: 'Schließen',
@@ -1759,7 +1759,7 @@
           modDeadlines: 'Fristen & Garantien',
           modFinances: 'Finanzen',
           modHealth: 'Gesundheit',
-          modDiary: 'Tagebuch',
+          modNotes: 'Notizen',
           modWorklog: 'Arbeitsprotokoll',
           modAssistant: 'Assistent',
           heroCta: 'Benachrichtige mich zum Launch',
@@ -1774,7 +1774,7 @@
           pricingFreeItem2: 'Erinnerungen auf dem Gerät',
           pricingPremiumBadge: 'Premium',
           pricingPremiumTitle: 'Alle Module',
-          pricingPremiumBody: 'Einkauf, Fristen, Finanzen, Gesundheit, Tagebuch, Arbeitsprotokoll, voller Assistent und mehr.',
+          pricingPremiumBody: 'Einkauf, Fristen, Finanzen, Gesundheit, Notizen, Arbeitsprotokoll, voller Assistent und mehr.',
           pricingPremiumItem1: 'Alle Module zum Bearbeiten freigeschaltet',
           pricingPremiumItem2: 'Voller Assistent',
           pricingPremiumItem3: 'Ein Kauf — monatlich, jährlich oder lebenslang',
@@ -1824,7 +1824,7 @@
           shot08: { title: 'Finanzen', desc: 'Einnahmen, Ausgaben, Überblick', alt: 'Finanzen' },
           shot09: { title: 'Neuer Eintrag', desc: 'Einmalig oder wiederkehrend', alt: 'Neuer Finanzeintrag' },
           shot10: { title: 'Gesundheit', desc: 'Blutdruck, Zucker, Gewicht, Medikamente', alt: 'Gesundheit' },
-          shot11: { title: 'Tagebuch', desc: 'Stimmung & Notizen', alt: 'Tagebuch' },
+          shot11: { title: 'Notizen', desc: 'Text & optionales Foto', alt: 'Notizen' },
           shot12: { title: 'Arbeitsprotokoll', desc: 'Stunden pro Monat', alt: 'Arbeitsprotokoll' },
           shot13: { title: 'Neuer Eintrag', desc: 'Datum, Stunden, Pause', alt: 'Neuer Arbeitseintrag' },
           shot14: { title: 'Assistent', desc: 'Was heute wichtig ist', alt: 'Assistent' },
