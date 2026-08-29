@@ -201,16 +201,33 @@
       font-weight: 600;
     }
 
-    .hero-store-soon {
-      margin: 14px 0 0;
-      font-size: 0.88rem;
-      font-weight: 600;
-      color: var(--muted);
-      text-align: center;
+    .hero-store-badges {
+      align-items: center;
     }
 
-    @media (min-width: 860px) {
-      .hero-store-soon { text-align: left; }
+    .store-badge {
+      display: inline-flex;
+      line-height: 0;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+
+    .store-badge:hover {
+      text-decoration: none;
+      transform: translateY(-1px);
+      filter: brightness(1.06);
+    }
+
+    .store-badge img {
+      display: block;
+      height: 44px;
+      width: auto;
+    }
+
+    .store-badge--google img {
+      height: 64px;
+      margin: -10px 0;
     }
 
     .hero-guide-link {
@@ -472,11 +489,12 @@
     }
 
     .de-promo-store {
-      margin: 0;
-      text-align: center;
-      font-size: 0.92rem;
-      color: var(--accent-light);
-      font-weight: 600;
+      margin: 18px 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      align-items: center;
     }
 
     @media (min-width: 900px) {
@@ -1296,11 +1314,15 @@
       <div class="hero-copy">
         <h1>LifeKompas</h1>
         <p class="tagline" data-i18n="tagline"></p>
-        <div class="hero-actions">
-          <a href="#notify" class="hero-cta" data-i18n="heroCta"></a>
+        <div class="hero-actions hero-store-badges">
+          <a class="store-badge store-badge--apple" href="https://apps.apple.com/app/id6765778908" target="_blank" rel="noopener noreferrer" data-i18n-aria="storeAppStoreAria">
+            <img src="assets/store/app-store-badge.svg" width="148" height="44" alt="Download on the App Store" loading="lazy">
+          </a>
+          <a class="store-badge store-badge--google" href="https://play.google.com/store/apps/details?id=com.antun.lifekompas.app" target="_blank" rel="noopener noreferrer" data-i18n-aria="storeGooglePlayAria">
+            <img src="assets/store/google-play-badge.png" width="168" height="65" alt="Get it on Google Play" loading="lazy">
+          </a>
           <a href="#guide" class="hero-guide-link" data-i18n="guideJump"></a>
         </div>
-        <p class="hero-store-soon" data-i18n="storeSoon"></p>
       </div>
       <div class="hero-phone" aria-hidden="true">
         <div class="phone-shell">
@@ -1320,7 +1342,14 @@
       <div class="de-promo-player-wrap">
         <div class="de-promo-player" id="de-promo-slot"></div>
       </div>
-      <p class="de-promo-store" data-i18n="storeSoon"></p>
+      <div class="de-promo-store hero-store-badges">
+        <a class="store-badge store-badge--apple" href="https://apps.apple.com/app/id6765778908" target="_blank" rel="noopener noreferrer" data-i18n-aria="storeAppStoreAria">
+          <img src="assets/store/app-store-badge.svg" width="148" height="44" alt="Download on the App Store" loading="lazy">
+        </a>
+        <a class="store-badge store-badge--google" href="https://play.google.com/store/apps/details?id=com.antun.lifekompas.app" target="_blank" rel="noopener noreferrer" data-i18n-aria="storeGooglePlayAria">
+          <img src="assets/store/google-play-badge.png" width="168" height="65" alt="Get it on Google Play" loading="lazy">
+        </a>
+      </div>
     </section>
 
     <section id="videos" class="reveal" hidden>
@@ -1392,17 +1421,6 @@
         </div>
       </div>
       <p class="pricing-note" data-i18n="pricingNote"></p>
-    </section>
-
-    <section id="notify" class="reveal">
-      <div class="section-head">
-        <h2 data-i18n="notifyTitle"></h2>
-        <p class="sub" data-i18n="notifySub"></p>
-      </div>
-      <p class="notify-simple">
-        <a class="hero-cta" id="notify-mail-link" href="mailto:lifekompas1@gmail.com?subject=LifeKompas%20launch%20notify">lifekompas1@gmail.com</a>
-      </p>
-      <p class="notify-hint" data-i18n="notifyHint"></p>
     </section>
 
     <section id="guide" class="reveal guide-section--mobile-collapsed">
@@ -1545,7 +1563,8 @@
           lightboxNext: 'Next',
           enlarge: 'Enlarge',
           tagline: 'Your personal compass for everyday life — offline, private, simple.',
-          storeSoon: 'Coming soon to the App Store and Google Play.',
+          storeAppStoreAria: 'Download on the App Store',
+          storeGooglePlayAria: 'Get it on Google Play',
           pill: 'Offline · Private · Powerful',
           videosTitle: 'Quick guides',
           videosSub: 'How to add an obligation and birthday, and settings on the home screen.',
@@ -1566,7 +1585,6 @@
           modNotes: 'Notes',
           modWorklog: 'Work log',
           modAssistant: 'Assistant',
-          heroCta: 'Notify me when it launches',
           offlineTitle: 'Your phone. Your data.',
           offlineBody: 'LifeKompas works offline. Notes stay on your device — no account, no cloud for your everyday life.',
           pricingTitle: 'Free to start. Premium when you need more.',
@@ -1588,11 +1606,7 @@
           priceYearlyLabel: '/ year',
           priceLifetime: '39,99 €',
           priceLifetimeLabel: 'lifetime (one-time)',
-          pricingNote: 'Prices shown in euros; your store may display local tax. Available in the app after launch.',
-          notifyTitle: 'Get notified',
-          notifySub: 'Send a short email — we will reply when LifeKompas is on the App Store and Google Play.',
-          notifyHint: 'Tap the address above. Only used to tell you when the app launches.',
-          notifyMailSubject: 'LifeKompas — notify me at launch',
+          pricingNote: 'Prices shown in euros; your store may display local tax. Buy Premium inside the app.',
           guideJump: 'Quick guide ↓',
           guideTitle: 'Quick guide',
           guideSub: 'How to get started with LifeKompas.',
@@ -1643,7 +1657,8 @@
           lightboxNext: 'Sljedeća',
           enlarge: 'Povećaj',
           tagline: 'Tvoj osobni kompas za svakodnevni život — offline, privatno, jednostavno.',
-          storeSoon: 'Uskoro na App Store i Google Play.',
+          storeAppStoreAria: 'Preuzmi na App Storeu',
+          storeGooglePlayAria: 'Preuzmi na Google Playu',
           pill: 'Offline · Privatno · Moćno',
           videosTitle: 'Kratki vodiči',
           videosSub: 'Kako dodati obvezu i rođendan te pregled postavki na početnom ekranu.',
@@ -1664,7 +1679,6 @@
           modNotes: 'Bilješke',
           modWorklog: 'Radni dnevnik',
           modAssistant: 'Pomoćnik',
-          heroCta: 'Obavijesti me kad izađe',
           offlineTitle: 'Tvoj telefon. Tvoji podaci.',
           offlineBody: 'LifeKompas radi offline. Bilješke ostaju na uređaju — bez računa, bez oblaka za svakodnevni život.',
           pricingTitle: 'Besplatno za početak. Premium kad zatreba.',
@@ -1686,11 +1700,7 @@
           priceYearlyLabel: '/ godišnje',
           priceLifetime: '39,99 €',
           priceLifetimeLabel: 'doživotno (jednokratno)',
-          pricingNote: 'Cijene u eurima; store može prikazati PDV. Dostupno u appu nakon objave.',
-          notifyTitle: 'Obavijesti me',
-          notifySub: 'Pošalji kratki mail — javit ćemo ti kad LifeKompas bude na App Storeu i Google Playu.',
-          notifyHint: 'Dodirni adresu iznad. Koristimo je samo da ti javimo kad app izađe.',
-          notifyMailSubject: 'LifeKompas — obavijest pri objavi',
+          pricingNote: 'Cijene u eurima; store može prikazati PDV. Premium kupuješ u appu.',
           guideJump: 'Kratka uputa ↓',
           guideTitle: 'Kratka uputa',
           guideSub: 'Kako početi koristiti LifeKompas.',
@@ -1741,7 +1751,8 @@
           lightboxNext: 'Weiter',
           enlarge: 'Vergrößern',
           tagline: 'Dein persönlicher Kompass für den Alltag — offline, privat, einfach.',
-          storeSoon: 'Demnächst im App Store und bei Google Play.',
+          storeAppStoreAria: 'Im App Store laden',
+          storeGooglePlayAria: 'Bei Google Play laden',
           pill: 'Offline · Privat · Leistungsstark',
           videosTitle: 'Kurze Anleitungen',
           videosSub: 'Verpflichtung und Geburtstag hinzufügen sowie Einstellungen auf dem Startbildschirm.',
@@ -1762,7 +1773,6 @@
           modNotes: 'Notizen',
           modWorklog: 'Arbeitsprotokoll',
           modAssistant: 'Assistent',
-          heroCta: 'Benachrichtige mich zum Launch',
           offlineTitle: 'Dein Telefon. Deine Daten.',
           offlineBody: 'LifeKompas funktioniert offline. Notizen bleiben auf dem Gerät — kein Konto, keine Cloud für den Alltag.',
           pricingTitle: 'Kostenlos starten. Premium wenn du mehr brauchst.',
@@ -1784,11 +1794,7 @@
           priceYearlyLabel: '/ Jahr',
           priceLifetime: '39,99 €',
           priceLifetimeLabel: 'lebenslang (einmalig)',
-          pricingNote: 'Preise in Euro; der Store kann MwSt. anzeigen. Nach dem Launch in der App verfügbar.',
-          notifyTitle: 'Benachrichtigung',
-          notifySub: 'Kurze E-Mail senden — wir melden uns, wenn LifeKompas im App Store und bei Google Play ist.',
-          notifyHint: 'Tippe die Adresse oben. Nur für die Launch-Benachrichtigung.',
-          notifyMailSubject: 'LifeKompas — Benachrichtigung zum Launch',
+          pricingNote: 'Preise in Euro; der Store kann MwSt. anzeigen. Premium kaufst du in der App.',
           guideJump: 'Kurzanleitung ↓',
           guideTitle: 'Kurzanleitung',
           guideSub: 'So startest du mit LifeKompas.',
@@ -1897,11 +1903,6 @@
           if (pack[key] != null) el.setAttribute('aria-label', pack[key]);
         });
 
-
-        var notifyLink = document.getElementById('notify-mail-link');
-        if (notifyLink && pack.notifyMailSubject) {
-          notifyLink.href = 'mailto:lifekompas1@gmail.com?subject=' + encodeURIComponent(pack.notifyMailSubject);
-        }
 
         document.getElementById('link-privacy').href = pack.privacyHref;
         document.getElementById('link-terms').href = pack.termsHref;
