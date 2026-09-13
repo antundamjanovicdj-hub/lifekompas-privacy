@@ -446,6 +446,30 @@
       flex: 0 0 auto;
     }
 
+    .faq-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .faq-item {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--bg-card);
+      padding: 0 16px;
+    }
+
+    .faq-item summary {
+      cursor: pointer;
+      font-weight: 700;
+      padding: 14px 0;
+    }
+
+    .faq-item p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
     /* DE promo — zasebna sekcija iznad Anleitungen */
     .de-promo-section {
       margin-bottom: 8px;
@@ -1379,6 +1403,14 @@
       </div>
     </section>
 
+    <section id="faq" class="reveal">
+      <div class="section-head">
+        <h2 data-i18n="faqTitle"></h2>
+        <p class="sub" data-i18n="faqSub"></p>
+      </div>
+      <div id="faq-list" class="faq-list"></div>
+    </section>
+
     <section id="modules" class="reveal">
       <div class="section-head">
         <h2 data-i18n="modulesTitle"></h2>
@@ -1589,6 +1621,42 @@
           videoGuideHome: 'Home screen & settings',
           videoGuideAssistant: 'Assistant settings',
           videoSwipeHint: '← Swipe for guides →',
+          faqTitle: 'Frequently asked questions',
+          faqSub: 'Plain answers if you already have the app, or are deciding whether to install it.',
+          faqItems: [
+            {
+              q: 'Is this a bank or payment app?',
+              a: 'No. LifeKompas does not connect to your bank and does not move money. You enter amounts yourself. When you save a monthly cost, it counts from that moment — including the current month.'
+            },
+            {
+              q: 'Can the family share one list?',
+              a: 'No. The app is for one person on one phone. There is no shared calendar and no family account. If someone else needs the same item, they add it in their own app.'
+            },
+            {
+              q: 'What can I put in Notes?',
+              a: 'Your own text and photos you take or pick. You can print or share a note as text. The app does not import Word or PDF files.'
+            },
+            {
+              q: 'Does the app invent due dates?',
+              a: 'No. Deadlines and birthdays are dates you enter. The calendar shows what you saved. It does not pull dates from email or the web.'
+            },
+            {
+              q: 'Do reminders work without the internet?',
+              a: 'Yes, on the installed iPhone or Android app, for the reminders you turn on. You do not need an account or a connection for those local reminders.'
+            },
+            {
+              q: 'Where is my data, and what if I uninstall?',
+              a: 'On this device. There is no LifeKompas cloud copy. Export a backup before you uninstall or change phones if you want to keep your lists.'
+            },
+            {
+              q: 'Why do I have to tap an item twice to change it?',
+              a: 'On purpose. The first tap opens the item to read. Change and delete stay behind a second step so a slip in the list does not wipe a deadline or a note.'
+            },
+            {
+              q: 'What is this app not for?',
+              a: 'Not banking, not paying bills from the app, and not a shared family planner. It is a personal list on your phone: money you typed, dates you typed, notes you wrote.'
+            }
+          ],
           modulesTitle: 'Modules',
           modulesSub: 'Everything in one place — no account, no cloud.',
           modObligations: 'Obligations & calendar',
@@ -1627,7 +1695,7 @@
           guideSteps: [
             'Choose a module from the home screen.',
             'Obligations: turn on reminder when saving — notifications work offline too.',
-            'Full offline reminders apply to the installed app (iOS/Android); in a web browser they may be limited.',
+            'Reminders you turn on work offline on the installed iPhone or Android app.',
             'Deadlines & warranties: registration, policies, devices — add dates; reminders via Assistant.',
             'Birthdays: Obligations → calendar → Add birthday; see upcoming in Assistant.',
             'Assistant: day overview on open; ⚙ for reminders and morning overview; modules under Advanced.',
@@ -1685,6 +1753,42 @@
           videoGuideHome: 'Početni ekran i postavke',
           videoGuideAssistant: 'Postavke pomoćnika',
           videoSwipeHint: '← Povuci za vodiče →',
+          faqTitle: 'Česta pitanja',
+          faqSub: 'Jasni odgovori ako već imaš app ili odlučuješ hoćeš li ga instalirati.',
+          faqItems: [
+            {
+              q: 'Je li ovo banka ili app za plaćanje?',
+              a: 'Nije. LifeKompas se ne spaja na banku i ne prebacuje novac. Iznose upisuješ sam. Kad spremiš mjesečni trošak, broji se od tog trenutka — i tekući mjesec.'
+            },
+            {
+              q: 'Može li obitelj dijeliti jedan popis?',
+              a: 'Ne. App je za jednu osobu na jednom telefonu. Nema zajedničkog kalendara ni obiteljskog računa. Ako netko drugi treba istu stavku, unosi je u svojoj app.'
+            },
+            {
+              q: 'Što mogu staviti u Bilješke?',
+              a: 'Svoj tekst i slike koje snimiš ili odabereš. Bilješku možeš ispisati ili podijeliti kao tekst. App ne uvozi Word ni PDF.'
+            },
+            {
+              q: 'Izmišlja li app rokove?',
+              a: 'Ne. Rokovi i rođendani su datumi koje ti uneseš. Kalendar pokazuje što si spremio. Ne vuče datume iz maila ni s weba.'
+            },
+            {
+              q: 'Rade li podsjetnici bez interneta?',
+              a: 'Da, na instaliranoj app na iPhoneu ili Androidu, za podsjetnike koje uključiš. Za te lokalne podsjetnike ne treba račun ni veza.'
+            },
+            {
+              q: 'Gdje su moji podaci, i što ako deinstaliram?',
+              a: 'Na ovom uređaju. LifeKompas nema kopiju u oblaku. Prije deinstalacije ili promjene telefona izvezi sigurnosnu kopiju ako želiš zadržati popise.'
+            },
+            {
+              q: 'Zašto moram dvaput tapnuti stavku da je mijenjam?',
+              a: 'Namjerno. Prvi tap otvara stavku za čitanje. Izmjena i brisanje ostaju iza drugog koraka, da ogreška na popisu ne obriše rok ili bilješku.'
+            },
+            {
+              q: 'Što ova app nije?',
+              a: 'Nije banka, ne plaća račune iz app-a i nije zajednički obiteljski planer. Osobni je popis na telefonu: novac koji si upisao, datumi koje si upisao, bilješke koje si napisao.'
+            }
+          ],
           modulesTitle: 'Moduli',
           modulesSub: 'Sve na jednom mjestu — bez računa, bez oblaka.',
           modObligations: 'Obveze & kalendar',
@@ -1723,7 +1827,7 @@
           guideSteps: [
             'Na početnom ekranu odaberi modul.',
             'Obveze: pri spremanju uključi podsjetnik — obavijesti rade i offline.',
-            'Puni offline podsjetnici vrijede za instaliranu aplikaciju (iOS/Android); u web pregledniku mogu biti ograničeni.',
+            'Podsjetnici koje uključiš rade offline na instaliranoj app na iPhoneu ili Androidu.',
             'Rokovi i garancije: registracija, police, uređaji — unesi datume; podsjetnici preko Pomoćnika.',
             'Rođendani: Obveze → kalendar → Dodaj rođendan; nadolazeće vidi u Pomoćniku.',
             'Pomoćnik: pregled dana; u ⚙ podsjetnici i jutarnji pregled; module u Napredno.',
@@ -1781,6 +1885,42 @@
           videoGuideHome: 'Startbildschirm und Einstellungen',
           videoGuideAssistant: 'Assistent-Einstellungen',
           videoSwipeHint: '← Swipe für Anleitungen →',
+          faqTitle: 'Häufige Fragen',
+          faqSub: 'Klare Antworten, wenn du die App schon hast oder noch entscheidest, ob du sie installierst.',
+          faqItems: [
+            {
+              q: 'Ist das eine Bank- oder Zahlungs-App?',
+              a: 'Nein. LifeKompas verbindet sich nicht mit der Bank und bewegt kein Geld. Beträge trägst du selbst ein. Speicherst du eine monatliche Ausgabe, zählt sie ab diesem Moment — auch den laufenden Monat.'
+            },
+            {
+              q: 'Kann die Familie eine Liste teilen?',
+              a: 'Nein. Die App ist für eine Person auf einem Telefon. Es gibt keinen gemeinsamen Kalender und kein Familienkonto. Wer denselben Eintrag braucht, trägt ihn in der eigenen App ein.'
+            },
+            {
+              q: 'Was kann ich in Notizen speichern?',
+              a: 'Eigenen Text und Fotos, die du aufnimmst oder auswählst. Eine Notiz kannst du drucken oder als Text teilen. Die App importiert keine Word- oder PDF-Dateien.'
+            },
+            {
+              q: 'Erfindet die App Fristen?',
+              a: 'Nein. Fristen und Geburtstage sind Daten, die du einträgst. Der Kalender zeigt, was du gespeichert hast. Er holt keine Daten aus E-Mail oder dem Web.'
+            },
+            {
+              q: 'Funktionieren Erinnerungen ohne Internet?',
+              a: 'Ja, in der installierten App auf iPhone oder Android, für die Erinnerungen, die du einschaltest. Dafür brauchst du kein Konto und keine Verbindung.'
+            },
+            {
+              q: 'Wo sind meine Daten, und was passiert beim Deinstallieren?',
+              a: 'Auf diesem Gerät. LifeKompas hat keine Kopie in der Cloud. Exportiere vor dem Deinstallieren oder Gerätewechsel ein Backup, wenn du deine Listen behalten willst.'
+            },
+            {
+              q: 'Warum muss ich zur Änderung zweimal tippen?',
+              a: 'Absichtlich. Der erste Tipp öffnet den Eintrag zum Lesen. Ändern und Löschen bleiben hinter einem zweiten Schritt, damit ein Verrutschen in der Liste keine Frist oder Notiz löscht.'
+            },
+            {
+              q: 'Wofür ist diese App nicht gedacht?',
+              a: 'Keine Banking-App, sie zahlt keine Rechnungen aus der App und ist kein gemeinsamer Familienplaner. Eine persönliche Liste auf dem Telefon: Beträge, die du eingegeben hast, Daten, die du eingegeben hast, Notizen, die du geschrieben hast.'
+            }
+          ],
           modulesTitle: 'Module',
           modulesSub: 'Alles an einem Ort — kein Konto, keine Cloud.',
           modObligations: 'Aufgaben & Kalender',
@@ -1819,7 +1959,7 @@
           guideSteps: [
             'Wähle auf dem Startbildschirm ein Modul.',
             'Verpflichtungen: Beim Speichern Erinnerung aktivieren — Benachrichtigungen funktionieren auch offline.',
-            'Volle Offline-Erinnerungen gelten für die installierte App (iOS/Android); im Webbrowser können sie eingeschränkt sein.',
+            'Erinnerungen, die du einschaltest, funktionieren offline in der installierten App auf iPhone oder Android.',
             'Fristen & Garantien: Zulassung, Versicherung, Geräte — Termine eintragen; Erinnerungen über den Assistenten.',
             'Geburtstage: Verpflichtungen → Kalender → Geburtstag hinzufügen; Anstehendes im Assistenten sehen.',
             'Assistent: Tagesübersicht beim Öffnen; ⚙ für Erinnerungen und Morgenüberblick; Module unter Erweitert.',
@@ -1938,6 +2078,7 @@
         }
 
         buildGuide();
+        buildFaq();
         updateGuideSummaryLabel();
         updateHeroShot();
         buildDePromoSection();
@@ -2130,6 +2271,24 @@
           guideListEl.appendChild(li);
         });
         guideFootnoteEl.textContent = pack.guideFootnote || '';
+      }
+
+      function buildFaq() {
+        var list = document.getElementById('faq-list');
+        if (!list) return;
+        var pack = PACK[currentLang];
+        list.innerHTML = '';
+        (pack.faqItems || []).forEach(function (item) {
+          var det = document.createElement('details');
+          det.className = 'faq-item';
+          var sum = document.createElement('summary');
+          sum.textContent = item.q;
+          var p = document.createElement('p');
+          p.textContent = item.a;
+          det.appendChild(sum);
+          det.appendChild(p);
+          list.appendChild(det);
+        });
       }
 
       function updateGuideSummaryLabel() {
